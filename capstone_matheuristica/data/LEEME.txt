@@ -1,0 +1,5 @@
+Poner acá:
+  set_datos_transversal.xlsx
+  instancias_small.xlsx
+  instancias_big.xlsx
+  grafo_santiago        (el MultiDiGraph pickleado del notebook del curso)

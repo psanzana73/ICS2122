@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+outputs/
+data/*.xlsx
+data/matriz_*.npz
+data/grafo_santiago
+.venv/
