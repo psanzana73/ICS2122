@@ -1,0 +1,72 @@
+\section{Escalabilidad: instancias SMALL}\label{sec:small}
+
+Para evaluar cómo se comporta el método en otro tamaño de red (objetivo O5), ambos métodos se corrieron en las 40 semanas SMALL con los mismos parámetros que en BIG. SMALL tiene la mitad de las solicitudes, un tercio de la flota (20 vehículos) y cinco bases, pero ventanas mucho más holgadas (Sección~\ref{sec:datos}). Todas las soluciones pasaron la validación independiente.
+
+\parrafo{El ahorro es mayor en SMALL.} La matheurística es más barata que el caso base en las 40 semanas, con un ahorro promedio de 15,7\,\% (entre 11,6 y 19,5\,\%), equivalente a \$2,7 millones por semana (Tabla~\ref{tab:small}). El mecanismo es el mismo que en BIG: con la misma flota (15,8 vehículos en promedio en ambos métodos) recorre un 17\,\% menos de kilómetros. La diferencia de magnitud se explica por las ventanas. En SMALL solo el 22\,\% de los retiros tiene menos de 90 minutos para iniciarse, contra el 91\,\% en BIG, de modo que el VND y el maestro tienen mucho más espacio para reordenar y consolidar paradas. El caso base, que inserta cada solicitud en la ruta ya armada sin reordenarla, no aprovecha esa holgura. La externalización es baja en ambos métodos (2,4 y 1,8 solicitudes por semana) y se concentra en la instancia 8, la de más insumos grandes.
+
+\begin{table}[htbp]
+\centering
+\caption{Resultados por instancia SMALL (promedio de sus cuatro semanas). Vehículos y externalizadas: caso base / matheurística.}\label{tab:small}
+\small
+\begin{tabular}{ccccccc}
+\toprule
+Instancia & Solicitudes & \multicolumn{2}{c}{Costo (MM CLP)} & Ahorro & Vehículos & Externalizadas \\
+\cmidrule(lr){3-4}
+ & por semana & Base & Matheur. & & & \\
+\midrule
+\tabinput{tablas/small_instancias.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\parrafo{Esfuerzo computacional.} La Tabla~\ref{tab:escala} compara ambos tamaños. Pasar de SMALL a BIG duplica las solicitudes y triplica la flota, pero el tiempo mediano por semana sube solo de 15,6 a 24,5 minutos y el pool final de 7.156 a 18.097 rutas. El crecimiento es moderado porque el maestro se detiene por un límite de trabajo y porque el pool se acota a 300 rutas por vehículo y día. En ambos tamaños, la generación de rutas con GRASP + VND consume más del 70\,\% del tiempo, el maestro entre 16 y 27\,\% y el pricing el resto; el cuello de botella computacional es, por lo tanto, la heurística y no Gurobi. Los tiempos de SMALL se midieron en los computadores de los integrantes del grupo, que no son idénticos, por lo que sirven como orden de magnitud. Las soluciones, en cambio, no dependen del computador, porque el límite de trabajo de Gurobi es determinista.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparación del método entre las 40 semanas SMALL y las 40 semanas BIG (promedios salvo indicación).}\label{tab:escala}
+\small
+\begin{tabular}{lcc}
+\toprule
+Indicador & SMALL & BIG \\
+\midrule
+\tabinput{tablas/escala.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\parrafo{Estrategias para redes más grandes.} Como cada día se construye por separado, la generación de rutas puede repartirse entre procesadores, día por día, sin cambiar el resultado; con cinco días, esto reduciría el tiempo de la fase más cara a cerca de un quinto. El tamaño del maestro se controla con el tope de rutas por vehículo y día y con el límite de trabajo. Si la red creciera mucho más, la descomposición natural es geográfica: resolver por separado zonas con sus bases y coordinar en el maestro solo los vehículos que cruzan zonas.
+
+\section{Variabilidad y calidad de la solución}\label{sec:calidad}
+
+\parrafo{El ahorro es estadísticamente significativo.} Como ambos métodos se aplican a las mismas semanas, la comparación es pareada: para cada semana se calcula el ahorro porcentual de la matheurística respecto del caso base. La Tabla~\ref{tab:estadistica} resume esos 40 ahorros por tamaño. El intervalo de confianza de 95\,\% para el ahorro medio es de 9,5 a 10,3\,\% en BIG y de 15,0 a 16,4\,\% en SMALL. Como el ahorro no tiene por qué distribuirse en forma normal, se aplica también la prueba de rangos con signo de Wilcoxon, que no supone una distribución: como las 40 semanas tienen ahorro positivo, la probabilidad de observar ese resultado si ambos métodos fueran equivalentes es menor que $10^{-12}$ en cada tamaño. La ventaja del método no se explica por azar.
+
+\begin{table}[htbp]
+\centering
+\caption{Prueba pareada del ahorro de la matheurística frente al caso base. IC: intervalo de confianza de 95\,\% (t de Student, 39 grados de libertad). Valor $p$: prueba de Wilcoxon de una cola.}\label{tab:estadistica}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+Tamaño & Semanas & Ahorro medio & IC 95\,\% (\%) & Estadístico $t$ & Semanas con ahorro & Valor $p$ \\
+\midrule
+\tabinput{tablas/estadistica.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\parrafo{Variabilidad por la semilla.} La matheurística es aleatoria: GRASP sortea la construcción y la fracción de la flota de cada arranque. Para medir cuánto depende el resultado de la semilla, cuatro semanas BIG que cubren el rango de demanda (455, 589, 692 y 731 solicitudes) se resolvieron con tres semillas adicionales a la original (Tabla~\ref{tab:semillas}). El coeficiente de variación del costo es como máximo 0,64\,\%, y el peor ahorro obtenido con cualquier semilla sigue siendo de 8,2\,\% o más. La variación entre semillas es entre 20 y 770 veces menor que la diferencia con el caso base, por lo que una sola corrida por semana basta para comparar. La variabilidad es mayor en la semana de menor demanda (instancia 1, semana 1), donde hay más formas de armar rutas de costo parecido y, por lo tanto, más soluciones distintas cercanas.
+
+\begin{table}[htbp]
+\centering
+\caption{Costo de la matheurística con cuatro semillas (MM CLP). DE: desviación estándar; CV: coeficiente de variación.}\label{tab:semillas}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{cccccccccc}
+\toprule
+Instancia & Semana & Caso base & Original & Semilla 1 & Semilla 2 & Semilla 3 & DE & CV & Ahorro \\
+\midrule
+\tabinput{tablas/semillas.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\parrafo{La solución es aproximada.} La matheurística no prueba optimalidad, por tres razones: el pricing es heurístico, el maestro entero se detiene por un límite de trabajo y la post-optimización solo inserta un tramo a la vez. La única cota disponible es la relajación lineal del maestro sobre el pool final, y la brecha contra ella es de 10,7\,\% en BIG y 7,5\,\% en SMALL. Esa cota vale para las rutas generadas y no para el problema completo, de modo que no permite afirmar que la solución esté a menos de esa distancia del óptimo. Lo que sí muestra es que el pricing aporta: las rutas que agrega bajan la cota un 14\,\% en BIG y un 11\,\% en SMALL respecto de la obtenida solo con GRASP, es decir, encuentra combinaciones que la heurística sola no veía. Obtener una cota válida para el problema completo exigiría resolver el pricing de forma exacta, un problema de ruteo con todas las restricciones del caso que, como se discutió en la Sección~\ref{sec:revision}, los métodos exactos no resuelven en el tamaño de BIG.

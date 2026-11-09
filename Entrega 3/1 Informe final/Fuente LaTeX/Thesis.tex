@@ -1,0 +1,138 @@
+\documentclass[pdftex]{pucthesis}
+
+% Floats
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+\usepackage{pgfgantt}
+\usepackage{chngcntr}
+\counterwithin{figure}{chapter}
+\counterwithin{table}{chapter}
+
+% Matemáticas
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% Times
+\usepackage{times}
+
+% Tablas
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+
+% Algoritmos y diagramas
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,fit,calc}
+\usepackage[ruled,linesnumbered,vlined]{algorithm2e}
+\SetAlgorithmName{Algoritmo}{Algoritmo}{Lista de algoritmos}
+\SetKwInput{KwIn}{Entrada}
+\SetKwInput{KwOut}{Salida}
+
+\usepackage{etoolbox}
+\apptocmd{\sloppy}{\hbadness 10000\relax}{}{}
+
+% Citas y referencias
+\usepackage[hidelinks,pdfusetitle,pdfdisplaydoctitle]{hyperref}
+\usepackage[notocbib]{apacite}
+\usepackage{doi}
+\renewcommand{\doitext}{}
+
+\usepackage[spanish,es-nodecimaldot,es-tabla]{babel}
+\addto\captionsspanish{\renewcommand{\chaptername}{}}
+
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+\setlength{\abovecaptionskip}{4pt}
+\setlength{\belowcaptionskip}{2pt}
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\raggedbottom
+\clubpenalty=150
+\widowpenalty=150
+
+\newcommand{\parrafo}[1]{\par\smallskip\noindent\textbf{#1}\ }
+\makeatletter\newcommand{\tabinput}[1]{\@@input #1 }\makeatother
+\begin{document}
+
+\title[Diseño y optimización de la red semanal de transporte sanitario\\ GRUPO 12]
+   {\bf Diseño y optimización de la red semanal de transporte sanitario\\ GRUPO 12}
+\author[Integrantes:]{Integrantes:\\
+\textnormal{\small{
+Josefina Pérez Prochelle\\
+Nicolás Prohens Martínez\\
+Antonia Rivera Mujica\\
+Pedro Sanzana Santander\\
+Luis Uribe Baeza\\
+Isabel Wilhelmy Vergara}}}
+\address{Escuela de Ingenier\'ia\\ Pontificia Universidad Cat\'olica de Chile}
+\advisor{\textbf{Profesor Guía:} Francisco Tamarín Salinas}
+\ogrsmember{\textbf{Ayudante Tutor:} Martín Tuset Cuevas}
+\date{2026}
+\copyrightname{Grupo 12}
+\copyrightyear{2026}
+
+\NoChapterPageNumber
+\pagenumbering{roman}
+\maketitle
+
+\chapter*{DECLARACIÓN DE USO DE INTELIGENCIA ARTIFICIAL}
+\input{./chapters/uso_ia.tex}
+\cleardoublepage
+
+\pdfbookmark{\contentsname}{toc}
+\tableofcontents
+\cleardoublepage
+
+\pagenumbering{arabic}
+
+\chapter[ABSTRACT]{Abstract}
+\input{./chapters/abstract.tex}
+
+\chapter[RESUMEN EJECUTIVO]{Resumen ejecutivo}\label{cap:resumen}
+\input{./chapters/resumen.tex}
+
+\chapter[INTRODUCCIÓN]{Introducción}
+\input{./chapters/introduccion.tex}
+
+\chapter[DESCRIPCIÓN DEL PROBLEMA]{Descripción del problema}\label{cap:descripcion}
+\input{./chapters/descripcion.tex}
+
+\chapter[DISCUSIÓN METODOLÓGICA]{Discusión metodológica}\label{cap:metodologia}
+\input{./chapters/metodologia.tex}
+
+\chapter[CASO BASE]{Caso base}\label{cap:casobase}
+\input{./chapters/casobase.tex}
+
+\chapter[TRABAJO DESARROLLADO Y RESULTADOS]{Trabajo desarrollado y resultados}\label{cap:trabajo}
+\input{./chapters/trabajo.tex}
+
+\chapter[ANÁLISIS DE SENSIBILIDAD]{Análisis de sensibilidad}\label{cap:sensibilidad}
+\input{./chapters/sensibilidad_intro.tex}
+\input{./chapters/sensibilidad_resultados.tex}
+
+\chapter[EXTENSIONES E IMPLEMENTACIÓN]{Extensiones e implementación}\label{cap:implementacion}
+\input{./chapters/implementacion.tex}
+
+\chapter[CONCLUSIONES]{Conclusiones}\label{cap:conclusiones}
+\input{./chapters/conclusiones.tex}
+
+\cleardoublepage
+\phantomsection
+\bibliographystyle{apacite}
+\renewcommand{\bibname}{BIBLIOGRAFÍA}
+\bibliography{Thesis}
+
+\clearpage
+\renewcommand{\appendixname}{APÉNDICE}
+\appendix
+\renewcommand{\theHfigure}{apendice.\Alph{figure}}
+\input{./chapters/apendice.tex}
+
+\end{document}

@@ -1,0 +1,48 @@
+La Tabla~\ref{tab:plan} detalla las tareas que quedan hasta el informe final, cada una con el objetivo específico que aborda, lo que entrega y cómo se sabrá que está terminada. La Figura~\ref{fig:gantt} las ubica en el calendario.
+
+\begin{table}[htbp]
+\centering
+\caption{Plan de trabajo hasta el informe final.}\label{tab:plan}
+\footnotesize
+\begin{tabularx}{\textwidth}{lYY}
+\toprule
+Tarea & Qué se hará & Entregable y criterio de término \\
+\midrule
+T1. Escalabilidad (O5) & Correr la matheurística y el caso base en las 40 semanas SMALL con los mismos parámetros. & Tabla SMALL vs BIG de ahorro, tiempo de cómputo y brecha; terminada con las 40 semanas validadas sin errores. \\
+T2. Sensibilidad completa (O3) & Extender los escenarios de la Sección~\ref{sec:sensibilidad} a cuatro semanas representativas (una por cuartil de demanda) y agregar rangos intermedios (demanda $\pm10$ y $\pm30$\,\%, congestión $+15$\,\%) y un escenario sin atraso permitido. & Curvas de costo, flota y externalización según cada parámetro; terminada cuando cada escenario tiene ambos métodos en las cuatro semanas. \\
+T3. Cuellos de botella (O2) & Partiendo del perfil de la Sección~\ref{sec:resultados} (insumos y equipos grandes con ventanas de una hora, furgones saturados), clasificar cada solicitud externalizada o atrasada según su causa y evaluar la división simultánea en la post-optimización. & Tabla de causas por clase y franja horaria y lista de las solicitudes más difíciles; terminada cuando toda externalización tiene una causa asignada. \\
+T4. Infraestructura (O4) & Evaluar cerrar cada base, ampliar la capacidad de las saturadas y forzar el uso de hubs con planes de transferencia para todas las solicitudes transferibles. & Valor de cada base y de los hubs en pesos por semana; terminada cuando cada alternativa tiene costo y estructura de solución. \\
+T5. Calidad de la solución & Dar más trabajo al maestro en una muestra de semanas y resolver de forma exacta subproblemas pequeños (un día, pocos vehículos) para estimar la distancia al óptimo. & Brecha separada entre el límite del solver y la calidad del pool; terminada con al menos 5 semanas medidas. \\
+T6. Presentación final & Preparar y ensayar la presentación del 24 de noviembre. & Presentación entregada el 23 de noviembre. \\
+T7. Informe final & Integrar T1 a T5 y documentar la herramienta. & Informe entregado el 27 de noviembre. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{ganttchart}[
+  hgrid, vgrid={*6{draw=none}, dotted},
+  x unit=0.62cm, y unit chart=0.5cm, y unit title=0.55cm,
+  title height=1, bar height=0.55,
+  title label font=\scriptsize, bar label font=\scriptsize,
+  milestone label font=\scriptsize\bfseries,
+  bar/.append style={fill=gray!55, draw=black!70},
+  milestone/.append style={fill=black},
+  time slot format=isodate]{2026-11-09}{2026-11-27}
+\gantttitle{Noviembre 2026}{19} \\
+\gantttitlelist{9,...,27}{1} \\
+\ganttbar{T1. Escalabilidad (O5)}{2026-11-09}{2026-11-12} \\
+\ganttbar{T2. Sensibilidad (O3)}{2026-11-09}{2026-11-14} \\
+\ganttbar{T3. Cuellos de botella (O2)}{2026-11-10}{2026-11-14} \\
+\ganttbar{T4. Infraestructura (O4)}{2026-11-11}{2026-11-15} \\
+\ganttbar{T5. Calidad de la solución}{2026-11-09}{2026-11-13} \\
+\ganttbar{T6. Presentación final}{2026-11-18}{2026-11-23} \\
+\ganttmilestone{Presentación final}{2026-11-24} \\
+\ganttbar{T7. Informe final}{2026-11-17}{2026-11-26} \\
+\ganttmilestone{Informe final}{2026-11-27}
+\end{ganttchart}
+\caption{Carta Gantt del trabajo restante.}\label{fig:gantt}
+\end{figure}
+
+La secuencia responde a dependencias concretas. T1, T2 y T5 parten de inmediato porque solo requieren cómputo y pueden correr en paralelo. T3 y T4 usan sus resultados: las causas de externalización y el valor de cada base se leen mejor con los escenarios ya corridos. La presentación del 24 de noviembre mostrará T1 a T5, y el informe final incorporará además la documentación de la herramienta.

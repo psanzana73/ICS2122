@@ -1,0 +1,89 @@
+Este capítulo usa la herramienta para evaluar cambios de infraestructura (objetivo O4), propone cómo implementarla en la organización y cómo evaluar un piloto, y plantea extensiones del modelo.
+
+\section{Alternativas de infraestructura}\label{sec:infra}
+
+Las alternativas se evaluaron en las semanas mediana (instancia 7, semana 4) y de mayor demanda (instancia 10, semana 3). En cada una se resolvió la semana completa con la red modificada, de modo que la flota, las bases y las rutas se reajustan a la nueva infraestructura.
+
+\parrafo{Ninguna base es imprescindible por sí sola.} La Tabla~\ref{tab:cierre} muestra el efecto de cerrar cada una de las nueve bases. Ningún cierre sube el costo más de 1,2\,\%: la flota de la base cerrada se reubica en las vecinas y los kilómetros cambian poco, porque las bases están cerca unas de otras en relación con los viajes que se hacen desde ellas. Las más valiosas son Macul y San Bernardo en la semana más exigente, que concentran vehículos en el oriente y el sur. En cambio, cerrar Talagante, Peñalolén, Lampa o Renca baja el costo en ambas semanas, en montos del orden de su costo fijo (entre \$130.000 y \$185.000 por semana). Talagante, la base más periférica, se evaluó en las cuatro semanas de la sensibilidad y su cierre bajó el costo en tres de ellas (en promedio un 0,8\,\%).
+
+\begin{table}[htbp]
+\centering
+\caption{Efecto de cerrar cada base sobre el costo de la matheurística. Vehículos: los que la base tenía en la solución original.}\label{tab:cierre}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+ & & & \multicolumn{2}{c}{Instancia 7, semana 4} & \multicolumn{2}{c}{Instancia 10, semana 3} \\
+\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+Base & Capacidad & Costo fijo (miles) & Vehículos & Cambio de costo & Vehículos & Cambio de costo \\
+\midrule
+\tabinput{tablas/bases_cierre.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+Que cerrar una base baje el costo revela una limitación del método. El maestro puede cerrar bases, pero solo elige entre rutas que ya salen de las bases donde GRASP ubicó cada vehículo; si en el pool no hay rutas equivalentes desde otra base, mantener la base abierta resulta más barato que perder esas rutas. Forzar el cierre obliga a generar las rutas alternativas. Con estos datos, la red podría operar con siete u ocho bases sin perder servicio, pero la diferencia (cerca de 1\,\% del costo) está cerca del margen de la heurística, por lo que se recomienda confirmar el cierre de Talagante con más semanas antes de decidirlo.
+
+\parrafo{Más furgones solo convienen en las semanas exigentes.} La Tabla~\ref{tab:furgones} muestra el efecto de agregar furgones fríos a los 18 disponibles. En la semana mediana la matheurística sigue usando 18 y el costo no cambia: ahí el furgón no limita. En la semana de mayor demanda sí: con dos furgones más el costo baja un 1,2\,\% (\$0,5 millones) y las externalizaciones pasan de 20 a 12. Cada furgón cuesta \$380.000 por semana y evita unas cuatro externalizaciones de \$190.000 a \$220.000. Con más furgones las externalizaciones siguen bajando (a 3 con ocho adicionales), pero cada furgón extra evita menos de dos y su costo ya no se recupera. La recomendación es contar con dos furgones adicionales en las semanas de alta demanda, por ejemplo mediante un contrato flexible, más que ampliar la flota permanente.
+
+\begin{table}[htbp]
+\centering
+\caption{Efecto de agregar furgones fríos: costo de la matheurística (MM CLP), furgones usados y solicitudes externalizadas.}\label{tab:furgones}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+Furgones & \multicolumn{3}{c}{Instancia 7, semana 4} & \multicolumn{3}{c}{Instancia 10, semana 3} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+disponibles & Costo & Usados & Externalizadas & Costo & Usados & Externalizadas \\
+\midrule
+\tabinput{tablas/furgones.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\parrafo{Una base adicional no se justifica.} Se evaluaron tres ubicaciones para una décima base, en los hubs de Providencia, Puente Alto y Centro. Se eligieron porque son los puntos que más reducen el tiempo de viaje desde la base más cercana hasta los retiros de la semana (461, 401 y 375 minutos menos por semana, respectivamente). La base nueva tiene capacidad para 8 vehículos y un costo fijo igual al promedio de las actuales, \$157.000 por semana. La matheurística la usa en las seis corridas, con dos a cuatro vehículos, pero el costo total cambia entre $-0{,}3$ y $+1{,}9$\,\% (Tabla~\ref{tab:basenueva}). Solo la base en el Centro baja el costo, en la semana de mayor demanda y por un monto menor que el margen de la heurística. El resultado es coherente con el de los cierres: las bases actuales ya están cerca de la demanda en relación con el largo de los viajes, de modo que acercar unos pocos vehículos no alcanza a pagar el costo fijo.
+
+\begin{table}[htbp]
+\centering
+\caption{Efecto de abrir una base adicional: vehículos ubicados en ella, cambio en el costo de la matheurística y solicitudes externalizadas (originalmente 8 en la instancia 7 y 20 en la instancia 10).}\label{tab:basenueva}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+ & \multicolumn{3}{c}{Instancia 7, semana 4} & \multicolumn{3}{c}{Instancia 10, semana 3} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Ubicación & Vehículos & Cambio de costo & Externalizadas & Vehículos & Cambio de costo & Externalizadas \\
+\midrule
+\tabinput{tablas/base_nueva.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Implementación y piloto}\label{sec:piloto}
+
+\parrafo{Uso en la operación.} La herramienta está pensada para el ciclo semanal de planificación. Cuando la organización conoce las solicitudes programadas de la semana siguiente, corre la matheurística (unos 25 minutos en un computador personal) y obtiene qué vehículos contratar, en qué base dejarlos y las rutas de cada día. El planificador revisa el resultado, en particular las solicitudes externalizadas, y confirma los contratos. Durante la semana, las solicitudes nuevas o canceladas se incorporan con la inserción del caso base, que toma segundos, y la semana se puede reoptimizar completa si los cambios son grandes. Para operar se necesitan los datos que ya usa el modelo, una licencia comercial de Gurobi (la académica no permite uso productivo) y una forma de entregar las rutas a los conductores.
+
+\parrafo{Implementación por etapas.} Se propone avanzar en tres etapas, para que cada una genere la evidencia que justifica la siguiente:
+\begin{enumerate}\itemsep0pt
+\item \emph{Marcha blanca} (4 semanas): la herramienta planifica en paralelo a la planificación actual, sin ejecutar sus rutas. Sirve para comparar costos y kilómetros planificados contra los reales, y para medir los tiempos reales de viaje y de atención con los registros de los vehículos, de modo de corregir la matriz de flujo libre.
+\item \emph{Piloto en una zona} (8 semanas): las rutas de la herramienta se ejecutan en un grupo de bases cercanas, por ejemplo las del poniente (Pudahuel, Cerrillos y Talagante), mientras el resto de la red sigue con la planificación actual. Así se mide el efecto en la operación real con un grupo de comparación.
+\item \emph{Despliegue completo}, si el piloto cumple los criterios de éxito.
+\end{enumerate}
+
+\parrafo{Evaluación del piloto.} El éxito se mide con los indicadores de la Sección~\ref{sec:kpis}, comparando la zona piloto con el resto de la red antes y durante el piloto, para descontar los cambios de demanda que afectan a ambas por igual. Se proponen cuatro criterios:
+\begin{enumerate}\itemsep0pt
+\item \emph{Costo}: el costo por solicitud atendida baja al menos un 5\,\%, la mitad del ahorro estimado en este informe, para dejar margen a la diferencia entre lo planificado y lo real. Con ocho semanas de piloto y la variabilidad semanal observada, un ahorro de esa magnitud es detectable con una prueba pareada.
+\item \emph{Servicio}: el porcentaje de entregas atrasadas y de solicitudes externalizadas no aumenta. Como la sensibilidad mostró que prohibir el atraso no encarece la operación, el piloto debería correr sin atraso permitido.
+\item \emph{Cumplimiento del plan}: al menos el 90\,\% de las rutas se ejecuta como se planificó. Si los conductores o los centros no pueden cumplir los horarios, el ahorro planificado no se materializa.
+\item \emph{Adopción}: los planificadores usan la herramienta cada semana y el tiempo que dedican a planificar no aumenta.
+\end{enumerate}
+Los principales riesgos son que los tiempos reales sean mayores que los de flujo libre, lo que la marcha blanca permite corregir, y que aparezcan solicitudes no programadas que el modelo semanal no anticipa.
+
+\section{Extensiones del modelo}\label{sec:extensiones}
+
+El análisis anterior sugiere cinco mejoras, ordenadas por su impacto esperado:
+\begin{enumerate}\itemsep0pt
+\item \emph{Tiempos de viaje según la hora.} La sensibilidad muestra que la congestión es lo que más mueve el costo después de la demanda; usar tiempos que dependan de la hora del día, estimados con los registros de la marcha blanca, haría el plan más realista.
+\item \emph{Ubicación de la flota en el maestro.} Hoy la base de cada vehículo la fija GRASP al generar las rutas, y el cierre de bases mostró que eso deja ahorros sin capturar. Generar las rutas de cada vehículo desde varias bases, o reubicar vehículos entre vueltas según los duales de capacidad de las bases, permitiría al maestro elegir mejor dónde ubicar la flota.
+\item \emph{División simultánea en la post-optimización.} Seis externalizaciones en las 40 semanas se podrían evitar dividiendo un insumo grande entre dos o tres vehículos ya pagados (Sección~\ref{sec:resultados}); probar esas combinaciones es una mejora acotada.
+\item \emph{Demanda incierta.} El modelo supone que las solicitudes de la semana se conocen de antemano. Una extensión natural es reservar capacidad para solicitudes urgentes y reoptimizar cada día con las que llegan.
+\item \emph{Cota válida.} Resolver el pricing de forma exacta en semanas pequeñas, o en un día con pocos vehículos, permitiría estimar cuán lejos del óptimo está la solución.
+\end{enumerate}

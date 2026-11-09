@@ -1,0 +1,28 @@
+G12 - ICS2122 Taller de Investigación Operativa - Capstone P4
+Entrega final (informe, presentación, código y corridas)
+
+1 Informe final
+  Informe final G12.pdf es el informe compilado.
+  Fuente LaTeX tiene todo para recompilarlo (Thesis.tex, capítulos, tablas y figuras).
+  Se compila con pdflatex, bibtex, pdflatex y pdflatex.
+
+2 Presentacion
+  Presentacion final G12.pdf con las 20 diapositivas para el 24 de noviembre.
+  En la portada falta poner los nombres de los integrantes.
+
+3 Codigo
+  capstone_matheuristica_v2 es el código final de la matheurística y del caso base.
+  El README.md explica cómo instalarlo y correrlo (requiere licencia de Gurobi).
+  La carpeta outputs trae los resultados de todas las corridas usadas en el informe.
+
+4 Corridas compartidas
+  Resultados de las corridas que hizo cada integrante para la Entrega 3.
+
+5 Informe 2 corregido
+  Informe 2 corregido G12.pdf es el informe 2 con todas las correcciones.
+  Registro de cambios y explicacion de modificaciones.docx explica qué se cambió.
+    La sección 4 detalla cada problema del código y cómo se arregló.
+    La sección 5 explica los cambios al caso base.
+    La sección 7 responde uno por uno los 99 comentarios del corrector.
+  Codigo modificado (Informe 2) es el código tal como quedó para esa entrega.
+  Fuente LaTeX tiene lo necesario para recompilar el informe 2.

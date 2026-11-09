@@ -1,0 +1,24 @@
+\section{Análisis de sensibilidad}\label{sec:sensibilidad}
+
+La sensibilidad busca responder dos preguntas: si la ventaja de coordinar se mantiene cuando cambian los supuestos, y cómo cambia la estructura de la solución (flota, bases y externalización) cuando cambian la oferta y la demanda. Cada escenario modifica un solo elemento respecto de los datos originales. Se elige porque toca un supuesto incierto o una decisión que la organización podría tomar (Tabla~\ref{tab:escenarios}). Para controlar el cómputo, los escenarios se resuelven en dos semanas representativas, con ambos métodos y los mismos parámetros de la Sección~\ref{sec:implementacion}: la semana de demanda mediana (instancia 7, semana 4, 589 solicitudes) y la más exigente (instancia 10, semana 3, 731 solicitudes).
+
+\begin{table}[htbp]
+\centering
+\caption{Escenarios de sensibilidad y su justificación.}\label{tab:escenarios}
+\footnotesize
+\begin{tabularx}{\textwidth}{lYY}
+\toprule
+Escenario & Cambio & Por qué \\
+\midrule
+Demanda $\pm20$\,\% & Se agregan copias o se eliminan al azar el 20\,\% de las solicitudes de cada día. & La demanda semanal varía entre 455 y 731 solicitudes; mide cuánta holgura tiene la red y si la flota crece en proporción. \\
+Flota $-25$\,\% & Se retira un cuarto de los vehículos de cada tipo. & Representa vehículos en mantención o contratos no renovados: dónde aparece primero la escasez. \\
+Congestión $+30$ y $+50$\,\% & Todos los tiempos de viaje se alargan. & Los tiempos de la red vial suponen flujo libre (61,6 km/h); es el supuesto más optimista del modelo. \\
+Jornada desde las 07:00 & La jornada regular parte una hora antes. & En BIG, unas 13 solicitudes diarias abren su retiro antes de las 08:00 y 17 deben retirarse a más tardar a las 09:00; mide el valor de adelantar turnos. \\
+Externalización $\times2$ y $\times0{,}5$ & Cambia el costo por solicitud externalizada. & El dato es ambiguo (la hoja de instancias trae el doble) y es el precio que compite con contratar vehículos. \\
+Bases: costo fijo $\times2$ & Se duplica el costo semanal de las bases. & Mide si conviene concentrar la flota en menos bases. \\
+Cierre de Talagante & Se elimina la base más periférica. & Evalúa el valor de una base específica y cuánto se redistribuye la flota (objetivo O4). \\
+Hubs para todas & Planes de transferencia para todas las solicitudes transferibles. & En la versión anterior las transferencias casi no se exploraron; mide si los hubs aportan. \\
+Utilización del caso base & 60 a 100\,\% en vez de 80\,\%, en las 40 semanas. & Verifica que la comparación no dependa de ese parámetro del caso base. \\
+\bottomrule
+\end{tabularx}
+\end{table}

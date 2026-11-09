@@ -1,0 +1,7 @@
+ERRORES
+(ninguno)
+
+ALERTAS
+D2_R101 (día 2, INSUMO_GENERAL, q=73, penalización $190,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_16, FURGON_FRIO_17
+D2_R106 (día 2, INSUMO_GENERAL, q=74, penalización $190,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_16, FURGON_FRIO_17
+D2_R98 (día 2, INSUMO_GENERAL, q=94, penalización $190,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_16, FURGON_FRIO_17

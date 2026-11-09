@@ -1,0 +1,31 @@
+La sensibilidad busca responder dos preguntas: si la ventaja de coordinar se mantiene cuando cambian los supuestos, y cómo cambia la estructura de la solución (flota, bases, externalización) cuando cambian la demanda, la oferta y los costos (objetivo O3). Las alternativas de infraestructura, como cerrar o abrir bases y agregar furgones, se analizan en el Capítulo~\ref{cap:implementacion}.
+
+\section{Escenarios y su justificación}\label{sec:sensibilidad}
+
+Cada escenario modifica un solo elemento respecto de los datos originales y se resuelve con ambos métodos y los mismos parámetros de la Sección~\ref{sec:implementacion}. Los parámetros se eligieron por una de tres razones: son un supuesto incierto del modelo (tiempos de viaje, costo de externalizar), representan algo que la organización no controla (demanda, disponibilidad de flota) o son una decisión que podría tomar (jornada, ventanas, exigencia de puntualidad, uso de hubs y de la división). La Tabla~\ref{tab:escenarios} detalla cada uno.
+
+Para controlar el cómputo, los escenarios principales se resolvieron en cuatro semanas que cubren el rango de demanda: la de menor demanda (instancia 1, semana 1, 455 solicitudes), la mediana (instancia 7, semana 4, 589), una exigente con muchas externalizaciones (instancia 8, semana 3, 692) y la de mayor demanda (instancia 10, semana 3, 731). Los rangos intermedios y los escenarios nuevos se resolvieron en las semanas mediana y de mayor demanda. En total son 60 corridas de la matheurística, cada una con su caso base.
+
+\begin{table}[htbp]
+\centering
+\caption{Escenarios de sensibilidad y su justificación.}\label{tab:escenarios}
+\footnotesize
+\begin{tabularx}{\textwidth}{lYY}
+\toprule
+Escenario & Cambio & Por qué \\
+\midrule
+Demanda $-20$ a $+30$\,\% & Se agregan copias o se eliminan al azar solicitudes de cada día. & La demanda semanal varía entre 455 y 731 solicitudes; mide cuánta holgura tiene la red y si la flota crece en proporción. \\
+Flota $-25$\,\% & Se retira un cuarto de los vehículos de cada tipo. & Vehículos en mantención o contratos no renovados: dónde aparece primero la escasez. \\
+Congestión $+15$ a $+50$\,\% & Todos los tiempos de viaje se alargan. & Los tiempos de la red vial suponen flujo libre (61,6 km/h); es el supuesto más optimista del modelo. \\
+Ventanas $+30$ y $-15$ min & Se mueve el cierre de cada ventana de retiro y de entrega. & Los centros podrían flexibilizar sus horarios o exigir más; el 99\,\% de las solicitudes difíciles tiene ventanas de una hora o menos. \\
+Jornada desde las 07:00 & La jornada regular parte una hora antes. & En BIG, unas 13 solicitudes diarias abren su retiro antes de las 08:00; mide el valor de adelantar turnos. \\
+Sin atraso permitido & Ninguna clase admite atraso. & La matheurística atrasa más entregas que el caso base; mide cuánto cuesta exigir puntualidad total. \\
+Externalización $\times2$ y $\times0{,}5$ & Cambia el costo por solicitud externalizada. & El dato es ambiguo (la hoja de instancias trae el doble) y es el precio que compite con contratar vehículos. \\
+Bases: costo fijo $\times2$ & Se duplica el costo semanal de las bases. & Mide si conviene concentrar la flota en menos bases. \\
+Bases: capacidad $+50$ y $-25$\,\% & Cambia el número de vehículos que admite cada base. & Macul y Talagante quedan llenas en 23 de las 40 semanas; mide si su capacidad limita. \\
+Hubs para todas & Planes de transferencia para todas las solicitudes transferibles. & Los hubs casi no se usan; mide si es por la forma de generar los planes (objetivo O5). \\
+Sin división & Ninguna solicitud se puede dividir. & Mide el valor de la división, la otra forma de coordinación (objetivo O5). \\
+Utilización del caso base & 60 a 100\,\% en vez de 80\,\%, en las 40 semanas. & Verifica que la comparación no dependa de ese parámetro del caso base. \\
+\bottomrule
+\end{tabularx}
+\end{table}

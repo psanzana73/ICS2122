@@ -1,0 +1,132 @@
+==========================================================================
+  Instancia 1 (big) — semana 1
+==========================================================================
+[datos] 455 solicitudes | 60 vehículos | 9 bases | 8 hubs
+[matriz] cache: matriz_osmnx_120.npz
+[planes] 77 solicitudes exceden la capacidad de todo vehículo compatible: entran con plan de división desde la primera iteración
+[diagnóstico] 77 solicitudes no son atendibles de forma directa:
+      77  la cantidad supera la capacidad de todo vehículo compatible (requiere división)
+    -> 77 se recuperan con división
+    -> 0 son externalización forzosa (0.0% de la demanda): cota inferior de la tasa de externalización de CUALQUIER solución
+
+--- iteración 1/3 --------------------------------------------
+[inicial] caso base + VND como punto de partida: $29,481,792 | externalizadas = 56
+[inicial] mejor arranque GRASP+VND: $30,895,522 | externalizadas = 27
+[pool] 2464 columnas GRASP+VND (218s)
+Set parameter Username
+Set parameter LicenseID to value 2866122
+Academic license - for non-commercial use only - expires 2027-09-21
+[cg] ronda 1: +244 columnas | cota LP $27,595,864 -> $27,052,140 (1.97%)
+[cg] ronda 2: +189 columnas | cota LP $27,052,140 -> $26,750,484 (1.12%)
+[cg] ronda 3: +185 columnas | cota LP $26,750,484 -> $26,450,194 (1.12%)
+[cg] ronda 4: +190 columnas | cota LP $26,450,194 -> $26,183,773 (1.01%)
+[cg] ronda 5: +149 columnas | cota LP $26,183,773 -> $26,024,934 (0.61%)
+[cg] ronda 6: +133 columnas | cota LP $26,024,934 -> $25,884,127 (0.54%)
+[maestro] costo = $29,481,792 | cota LP pool = $25,884,127 | gap MIP = 10.42% | externalizadas = 56 (98s)
+[completar] 4 externalizadas rescatadas por inserción: $29,481,792 -> $29,426,649 | externalizadas = 52 (14s)
+[reparación] 55 solicitudes críticas -> 11 planes nuevos (transferencia/división)
+
+--- iteración 2/3 --------------------------------------------
+[pool] 9364 columnas GRASP+VND (605s)
+[cg] ronda 1: +149 columnas | cota LP $24,998,600 -> $24,893,195 (0.42%)
+[cg] ronda 2: +127 columnas | cota LP $24,893,195 -> $24,850,033 (0.17%)
+[cg] ronda 3: +119 columnas | cota LP $24,850,033 -> $24,801,601 (0.19%)
+[cg] ronda 4: +138 columnas | cota LP $24,801,601 -> $24,754,123 (0.19%)
+[cg] ronda 5: +99 columnas | cota LP $24,754,123 -> $24,718,532 (0.14%)
+[cg] ronda 6: +103 columnas | cota LP $24,718,532 -> $24,675,142 (0.18%)
+[maestro] costo = $28,513,964 | cota LP pool = $24,675,142 | gap MIP = 12.38% | externalizadas = 52 (110s)
+[completar] 3 externalizadas rescatadas por inserción: $28,513,964 -> $28,366,203 | externalizadas = 49 (13s)
+[reparación] 50 solicitudes críticas -> 0 planes nuevos (transferencia/división)
+
+--- iteración 3/3 --------------------------------------------
+[pool] 15409 columnas GRASP+VND (610s)
+[cg] ronda 1: +89 columnas | cota LP $24,495,280 -> $24,461,244 (0.14%)
+[cg] ronda 2: +81 columnas | cota LP $24,461,244 -> $24,438,332 (0.09%)
+[maestro] costo = $27,800,972 | cota LP pool = $24,438,332 | gap MIP = 11.34% | externalizadas = 49 (111s)
+[completar] 1 externalizadas rescatadas por inserción: $27,800,972 -> $27,783,484 | externalizadas = 48 (14s)
+
+[maestro final] costo = $27,500,473 | cota LP pool = $24,427,495 | gap MIP = 10.37% (128s)
+
+==========================================================================
+  RESULTADOS
+==========================================================================
+  costo_total.................................  27,500,473.41
+  cota_inferior_pool..........................  24,427,495.44
+  gap_maestro.................................           0.10
+  gap_vs_cota_lp..............................           0.11
+  costo_fijo_vehiculos........................   8,340,000.00
+  costo_fijo_bases............................   1,410,000.00
+  costo_fijo_hubs.............................              0
+  costo_km....................................  13,149,946.24
+  costo_sobretiempo...........................      15,829.83
+  costo_tardanza..............................      24,697.33
+  costo_handling_hubs.........................           0.00
+  costo_externalizacion.......................   4,560,000.00
+  solicitudes_totales.........................            455
+  solicitudes_atendidas.......................            407
+  solicitudes_externalizadas..................             48
+  tasa_externalizacion........................           0.11
+  distancia_total_km..........................      17,423.21
+  sobretiempo_total_min.......................           9.31
+  vehiculo_dias_con_sobretiempo...............              4
+  vehiculo_dias_usados........................            120
+  tardanza_media_min..........................           0.07
+  tardanza_p90_min............................           0.00
+  utilizacion_jornada_media...................           0.68
+  vehiculos_activados.........................             27
+  vehiculos_disponibles.......................             60
+  bases_usadas................................              9
+  bases_disponibles...........................              9
+  hubs_habilitados............................              0
+  hubs_disponibles............................              8
+  transferencias..............................              0
+  solicitudes_divididas.......................             29
+  costo_por_solicitud.........................      60,440.60
+  km_por_solicitud_atendida...................          42.81
+  pct_entregas_atrasadas......................           0.00
+  km_directos_atendidas.......................      12,177.67
+  factor_recorrido............................           1.43
+  uso_capacidad_medio.........................           0.38
+  uso_capacidad_pico..........................           0.82
+  fraccion_km_vacio...........................           0.36
+  pct_rutas_1_2_tramos........................           0.25
+  tramos_por_ruta.............................           3.70
+  uso_semanal_flota...........................           0.89
+  vehiculo_dias_ociosos_pagados...............             15
+  veh_VAN_GENERAL.............................              6
+  veh_VAN_FRIO................................              8
+  veh_FURGON_FRIO.............................             13
+  externalizacion_forzosa.....................              0
+  externalizacion_evitable....................             48
+
+==========================================================================
+  VALIDACIÓN INDEPENDIENTE
+==========================================================================
+  vehículo-días usados / pagados: 120 / 135
+  OK: la solución cumple todas las restricciones del modelo
+  23 alertas de coherencia:
+    ! D1_R14 (día 1, INSUMO_GENERAL, q=77, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_02, VAN_GENERAL_03, VAN_GENERAL_05
+    ! D1_R18 (día 1, INSUMO_GENERAL, q=77, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_02, VAN_GENERAL_03, VAN_GENERAL_05
+    ! D1_R19 (día 1, INSUMO_GENERAL, q=74, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_02, VAN_GENERAL_03, VAN_FRIO_04
+    ! D1_R31 (día 1, INSUMO_GENERAL, q=78, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_02, VAN_GENERAL_03, VAN_GENERAL_05
+    ! D1_R40 (día 1, INSUMO_GENERAL, q=84, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_02, VAN_GENERAL_03, VAN_GENERAL_05
+    ! D1_R43 (día 1, INSUMO_GENERAL, q=85, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_02, VAN_GENERAL_03, VAN_GENERAL_05
+    ! D1_R47 (día 1, INSUMO_GENERAL, q=76, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_02, VAN_GENERAL_03, VAN_GENERAL_05
+    ! D1_R79 (día 1, INSUMO_GENERAL, q=81, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_02, VAN_GENERAL_03, VAN_GENERAL_05
+    ! D4_R366 (día 4, INSUMO_GENERAL, q=83, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_13, VAN_GENERAL_04, VAN_GENERAL_05
+    ! D5_R378 (día 5, INSUMO_GENERAL, q=95, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R382 (día 5, INSUMO_GENERAL, q=76, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R383 (día 5, INSUMO_GENERAL, q=87, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R385 (día 5, INSUMO_GENERAL, q=72, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R386 (día 5, INSUMO_GENERAL, q=76, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R388 (día 5, INSUMO_GENERAL, q=71, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R390 (día 5, INSUMO_GENERAL, q=83, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R391 (día 5, INSUMO_GENERAL, q=73, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R392 (día 5, INSUMO_GENERAL, q=92, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R396 (día 5, INSUMO_GENERAL, q=89, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R412 (día 5, INSUMO_GENERAL, q=86, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R416 (día 5, INSUMO_GENERAL, q=85, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R420 (día 5, INSUMO_GENERAL, q=71, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+    ! D5_R436 (día 5, INSUMO_GENERAL, q=90, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_04, FURGON_FRIO_13
+
+  tiempo total 2206s | salidas en outputs/*_big_Instancia1_semana1_esc-penal_x05.csv

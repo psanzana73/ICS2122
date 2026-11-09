@@ -1,0 +1,24 @@
+REPARTO DE CORRIDAS - ENTREGA 3 - G12
+ICS2122 Taller de Investigación Operativa (Capstone)
+
+Persona 1 (SMALL): las 40 semanas SMALL (39 tareas, unos 10 min cada una). 3 a 5 horas.
+Persona 2 (sensibilidad A): 11 escenarios en instancia 1 semana 1 (la de menor demanda, 455 solicitudes)
+  + 5 intermedios en instancia 10 semana 3. 16 tareas, 4 a 6 horas.
+Persona 3 (sensibilidad B): 11 escenarios en instancia 8 semana 3 (692 solicitudes, la segunda con más externalizaciones)
+  + 5 intermedios en instancia 7 semana 4. 16 tareas, 4 a 6 horas.
+Persona 4 (bases): cierre de cada una de las otras 8 bases en instancia 10 semana 3 e instancia 7 semana 4. 16 tareas, 4 a 6 horas.
+Isa (en su Mac, NO va en el zip): 3 semillas extra en 4 semanas (1-1, 7-4, 8-3, 10-3) + furgones extra
+  (+2, +4, +8). 17 tareas, unas 3 horas con 3 procesos.
+
+Escenarios de sensibilidad (los mismos 11 del Informe 2): bases_fijo_x2, congestion30, congestion50,
+demanda+20, demanda-20, flota-25, hubs_todas, jornada7, penal_x05, penal_x2, sin_talagante.
+Intermedios: demanda+10, demanda+30, demanda-10, congestion15, sin_atraso.
+
+El caso base de todos estos escenarios lo corre Isa al final (son segundos por semana).
+Cuando lleguen los resultados_*.zip, descomprimir su carpeta outputs dentro de
+capstone_matheuristica_v2/outputs (no se pisan, cada archivo tiene su nombre).
+
+------------------------------------------------------------
+MENSAJE PARA EL GRUPO (adjuntar Corridas Entrega 3 G12.zip)
+------------------------------------------------------------
+Hola! Para la entrega 3 hay que correr harto y en mi compu solo serían como 35 horas, así que lo repartí. En el zip hay 4 carpetas, Persona 1 a Persona 4. Pónganse de acuerdo quién es cada número y cada uno abre solo su carpeta y sigue el LEEME PRIMERO que viene adentro. Es instalar Python si no lo tienen, sacar la licencia de Gurobi con el correo UC (5 min) y correr un archivo. Se deja corriendo en la noche, enchufado y con la tapa abierta, son entre 3 y 6 horas. Al final queda un zip resultados_personaN.zip que me mandan. Yo corro otra parte en mi compu. Si algo falla me mandan foto.

@@ -1,0 +1,5 @@
+ERRORES
+(ninguno)
+
+ALERTAS
+D2_R106 (día 2, INSUMO_GENERAL, q=74, penalización $190,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_02, VAN_GENERAL_05, VAN_FRIO_11

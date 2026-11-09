@@ -1,0 +1,8 @@
+pandas>=2.1,<3.0
+numpy>=1.26,<3.0
+openpyxl>=3.1,<4.0
+matplotlib>=3.8
+gurobipy>=11.0
+# Solo si se quiere recalcular la matriz desde el grafo vial (no hace falta: viene en data/):
+# osmnx>=2.0,<3.0
+# networkx>=3.2,<4.0

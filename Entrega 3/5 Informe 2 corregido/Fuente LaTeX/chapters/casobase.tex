@@ -1,0 +1,32 @@
+El caso base representa cómo planificaría la semana un equipo que conoce todas las solicitudes con anticipación pero no usa optimización matemática: aplica reglas simples, de a una decisión por vez, y no vuelve atrás sobre lo ya decidido. Se usa como referencia para medir cuánto aporta coordinar las decisiones. Para que la comparación sea justa, el caso base usa los mismos datos, la misma matriz de tiempos, el mismo evaluador de rutas y el mismo validador que la metodología propuesta.
+
+Respecto de la versión anterior, el caso base se corrigió en dos aspectos, a raíz de que externalizaba en promedio 33,6 solicitudes por semana, diez veces más que la matheurística. Un planificador que debe evitar externalizar no aceptaría ese resultado: revisaría su flota y aprovecharía mejor las rutas ya armadas. Las dos correcciones apuntan a eso y su efecto se cuantifica en la Sección~\ref{sec:resultados}.
+
+\parrafo{Paso 1: flota inicial.} Se mantienen abiertas todas las bases. Cada solicitud se asocia a la base más cercana a su origen y se estima su carga de trabajo como el tiempo de ir desde la base al origen, atenderla, llevarla al destino y volver, como si se atendiera sola. Para cada tipo de vehículo se suma esa carga en el día más exigente de la semana y se divide por el 80\,\% de la jornada; el resultado es el número inicial de vehículos de ese tipo. Para cada solicitud se usa el tipo compatible más barato que la puede llevar. Los vehículos se reparten entre las bases en proporción a su carga estimada. El 80\,\% es solo un punto de partida, porque el paso 3 corrige la flota; su efecto se evalúa en la Sección~\ref{sec:sensibilidad}.
+
+\parrafo{Paso 2: despacho diario.} Cada día, las solicitudes se ordenan por urgencia (primero las que cierran antes su ventana de retiro, luego las que no admiten atraso y luego las que vencen antes su entrega) y se procesan de a una. Cada solicitud se asigna al vehículo compatible que la puede incorporar sin atraso ni sobretiempo y al menor costo adicional. El vehículo la intercala en la mejor posición de su ruta ya armada, sin cambiar el orden de las paradas que ya tenía. En la versión anterior solo podía agregarla al final, lo que dejaba sin usar los huecos de la mañana. Si ningún vehículo puede hacerlo directamente, se prueban en orden la división, la transferencia por el hub más cercano al trayecto (pagando su costo fijo si aún no estaba habilitado) y la atención con atraso o sobretiempo. Se externaliza solo si ninguna de esas opciones es factible o si todas cuestan más que externalizar.
+
+\parrafo{Paso 3: ajuste de la flota.} Este paso es nuevo. Terminada la semana, el planificador revisa las solicitudes externalizadas. Para cada una identifica el tipo de vehículo que la habría llevado y la base con cupo más cercana a su origen, y agrega un vehículo del par (tipo, base) que concentra más externalizaciones. Luego vuelve a despachar la semana completa. Si el costo total baja, conserva el vehículo y repite; si no, descarta ese par y prueba el siguiente. Se detiene cuando ningún vehículo adicional paga su costo fijo.
+
+El Algoritmo~\ref{alg:base} resume el procedimiento y el Apéndice~\ref{ap:base} muestra un ejemplo.
+
+\begin{algorithm}[htbp]
+\caption{Caso base: planificación por reglas.}\label{alg:base}
+\small
+\KwIn{solicitudes de la semana, flota, bases y hubs}
+\KwOut{flota contratada, base de cada vehículo, rutas diarias y externalizadas}
+Abrir todas las bases; estimar la carga por base, tipo de vehículo y día\;
+$F \leftarrow$ flota inicial al 80\,\% de la jornada en el día más exigente; repartirla entre bases\;
+$S \leftarrow$ \textsc{Despachar}$(F)$; descartados $\leftarrow \emptyset$\;
+\While{$S$ tiene externalizadas atendibles por un vehículo no contratado}{
+  $(t,b) \leftarrow$ par (tipo, base) con más externalizadas, fuera de descartados\;
+  $S' \leftarrow$ \textsc{Despachar}$(F \cup \{\text{un vehículo de tipo } t \text{ en } b\})$\;
+  \lIf{\textup{costo}$(S') <$ \textup{costo}$(S)$}{$F \leftarrow F\cup\{\cdot\}$; $S\leftarrow S'$}
+  \lElse{agregar $(t,b)$ a descartados}
+}
+\Return{$S$}\;
+\BlankLine
+\textsc{Despachar}$(F)$: para cada día, para cada solicitud en orden de urgencia: intercalar en el vehículo de $F$ factible más barato; si no hay, probar división, transferencia y atraso; si nada conviene, externalizar\;
+\end{algorithm}
+
+El caso base es razonable, porque usa información de la demanda, consolida solicitudes y revisa su flota. Sus límites son los de cualquier procedimiento secuencial: decide la flota con una estimación que ignora la consolidación, asigna cada solicitud mirando solo las que ya asignó, nunca reordena una ruta y agrega vehículos de a uno, sin reconsiderar dónde quedaron los anteriores.

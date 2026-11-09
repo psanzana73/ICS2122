@@ -1,0 +1,103 @@
+==========================================================================
+  Instancia 3 (small) — semana 1
+==========================================================================
+[datos] 270 solicitudes | 20 vehículos | 5 bases | 4 hubs
+[matriz] cache: matriz_osmnx_120.npz
+[planes] 44 solicitudes exceden la capacidad de todo vehículo compatible: entran con plan de división desde la primera iteración
+[diagnóstico] 44 solicitudes no son atendibles de forma directa:
+      44  la cantidad supera la capacidad de todo vehículo compatible (requiere división)
+    -> 44 se recuperan con división
+    -> 0 son externalización forzosa (0.0% de la demanda): cota inferior de la tasa de externalización de CUALQUIER solución
+
+--- iteración 1/3 --------------------------------------------
+[inicial] caso base + VND como punto de partida: $14,138,752 | externalizadas = 1
+[inicial] mejor arranque GRASP+VND: $13,723,579 | externalizadas = 2
+[pool] 1264 columnas GRASP+VND (102s)
+Set parameter Username
+Set parameter LicenseID to value 2866113
+Academic license - for non-commercial use only - expires 2027-09-21
+[cg] ronda 1: +90 columnas | cota LP $13,436,303 -> $13,318,081 (0.88%)
+[cg] ronda 2: +90 columnas | cota LP $13,318,081 -> $13,056,951 (1.96%)
+[cg] ronda 3: +80 columnas | cota LP $13,056,951 -> $12,870,321 (1.43%)
+[cg] ronda 4: +49 columnas | cota LP $12,870,321 -> $12,759,770 (0.86%)
+[cg] ronda 5: +64 columnas | cota LP $12,759,770 -> $12,642,344 (0.92%)
+[cg] ronda 6: +36 columnas | cota LP $12,642,344 -> $12,599,518 (0.34%)
+[maestro] costo = $13,723,579 | cota LP pool = $12,599,518 | gap MIP = 0.54% | externalizadas = 2 (3s)
+[completar] ninguna inserción factible más barata que externalizar (0s)
+[reparación] 3 solicitudes críticas -> 2 planes nuevos (transferencia/división)
+
+--- iteración 2/3 --------------------------------------------
+[pool] 4702 columnas GRASP+VND (314s)
+[cg] ronda 1: +18 columnas | cota LP $12,178,175 -> $12,148,105 (0.25%)
+[cg] ronda 2: +18 columnas | cota LP $12,148,105 -> $12,135,005 (0.11%)
+[cg] ronda 3: +15 columnas | cota LP $12,135,005 -> $12,130,786 (0.03%)
+[maestro] costo = $13,343,732 | cota LP pool = $12,130,786 | gap MIP = 4.71% | externalizadas = 2 (90s)
+[completar] 1 externalizadas rescatadas por inserción: $13,343,732 -> $13,254,982 | externalizadas = 1 (0s)
+[reparación] 2 solicitudes críticas -> 0 planes nuevos (transferencia/división)
+
+--- iteración 3/3 --------------------------------------------
+[pool] 7452 columnas GRASP+VND (310s)
+[cg] ronda 1: +11 columnas | cota LP $12,015,164 -> $12,010,469 (0.04%)
+[maestro] costo = $13,216,701 | cota LP pool = $12,010,469 | gap MIP = 6.51% | externalizadas = 1 (89s)
+[completar] ninguna inserción factible más barata que externalizar (0s)
+
+==========================================================================
+  RESULTADOS
+==========================================================================
+  costo_total.................................  13,207,453.88
+  cota_inferior_pool..........................  12,010,469.17
+  gap_maestro.................................           0.07
+  gap_vs_cota_lp..............................           0.09
+  costo_fijo_vehiculos........................   4,520,000.00
+  costo_fijo_bases............................     475,000.00
+  costo_fijo_hubs.............................              0
+  costo_km....................................   7,860,404.38
+  costo_sobretiempo...........................     161,642.83
+  costo_tardanza..............................         406.67
+  costo_handling_hubs.........................           0.00
+  costo_externalizacion.......................     190,000.00
+  solicitudes_totales.........................            270
+  solicitudes_atendidas.......................            269
+  solicitudes_externalizadas..................              1
+  tasa_externalizacion........................           0.00
+  distancia_total_km..........................      11,126.69
+  sobretiempo_total_min.......................         116.28
+  vehiculo_dias_con_sobretiempo...............             11
+  vehiculo_dias_usados........................             69
+  tardanza_media_min..........................           0.00
+  tardanza_p90_min............................           0.00
+  utilizacion_jornada_media...................           0.72
+  vehiculos_activados.........................             16
+  vehiculos_disponibles.......................             20
+  bases_usadas................................              3
+  bases_disponibles...........................              5
+  hubs_habilitados............................              0
+  hubs_disponibles............................              4
+  transferencias..............................              0
+  solicitudes_divididas.......................             44
+  costo_por_solicitud.........................      48,916.50
+  km_por_solicitud_atendida...................          41.36
+  pct_entregas_atrasadas......................           0.00
+  km_directos_atendidas.......................       5,973.52
+  factor_recorrido............................           1.86
+  uso_capacidad_medio.........................           0.39
+  uso_capacidad_pico..........................           0.89
+  fraccion_km_vacio...........................           0.40
+  pct_rutas_1_2_tramos........................           0.12
+  tramos_por_ruta.............................           4.71
+  uso_semanal_flota...........................           0.86
+  vehiculo_dias_ociosos_pagados...............             11
+  veh_VAN_GENERAL.............................              6
+  veh_VAN_FRIO................................              5
+  veh_FURGON_FRIO.............................              5
+  externalizacion_forzosa.....................              0
+  externalizacion_evitable....................              1
+
+==========================================================================
+  VALIDACIÓN INDEPENDIENTE
+==========================================================================
+  vehículo-días usados / pagados: 69 / 80
+  OK: la solución cumple todas las restricciones del modelo
+  OK: ninguna externalización con vehículos ya pagados ociosos ese día
+
+  tiempo total 949s | salidas en outputs/*_small_Instancia3_semana1.csv

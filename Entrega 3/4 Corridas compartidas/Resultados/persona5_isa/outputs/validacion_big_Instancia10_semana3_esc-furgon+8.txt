@@ -1,0 +1,5 @@
+ERRORES
+(ninguno)
+
+ALERTAS
+D1_R42 (día 1, INSUMO_GENERAL, q=75, penalización $190,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: FURGON_FRIO_08, VAN_GENERAL_07, VAN_GENERAL_08

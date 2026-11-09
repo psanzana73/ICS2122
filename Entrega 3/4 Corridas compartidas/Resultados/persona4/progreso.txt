@@ -1,0 +1,17 @@
+[paralelo] 16 tareas con 2 procesos
+[paralelo] 1/16 big_Instancia10_semana3_esc-sin_pudahuel: OK (58 min) | 58 min totales
+[paralelo] 2/16 big_Instancia10_semana3_esc-sin_quilicura: OK (59 min) | 59 min totales
+[paralelo] 3/16 big_Instancia10_semana3_esc-sin_renca: OK (53 min) | 111 min totales
+[paralelo] 4/16 big_Instancia10_semana3_esc-sin_cerrillos: OK (52 min) | 112 min totales
+[paralelo] 5/16 big_Instancia10_semana3_esc-sin_macul: OK (50 min) | 161 min totales
+[paralelo] 6/16 big_Instancia10_semana3_esc-sin_san_bernardo: OK (53 min) | 164 min totales
+[paralelo] 7/16 big_Instancia10_semana3_esc-sin_penalolen: OK (47 min) | 208 min totales
+[paralelo] 8/16 big_Instancia10_semana3_esc-sin_lampa: OK (49 min) | 213 min totales
+[paralelo] 9/16 big_Instancia7_semana4_esc-sin_quilicura: OK (46 min) | 255 min totales
+[paralelo] 10/16 big_Instancia7_semana4_esc-sin_pudahuel: OK (45 min) | 258 min totales
+[paralelo] 11/16 big_Instancia7_semana4_esc-sin_renca: OK (42 min) | 297 min totales
+[paralelo] 12/16 big_Instancia7_semana4_esc-sin_cerrillos: OK (43 min) | 301 min totales
+[paralelo] 13/16 big_Instancia7_semana4_esc-sin_san_bernardo: OK (46 min) | 343 min totales
+[paralelo] 14/16 big_Instancia7_semana4_esc-sin_macul: OK (44 min) | 345 min totales
+[paralelo] 15/16 big_Instancia7_semana4_esc-sin_penalolen: OK (45 min) | 387 min totales
+[paralelo] 16/16 big_Instancia7_semana4_esc-sin_lampa: OK (44 min) | 389 min totales

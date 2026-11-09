@@ -1,0 +1,85 @@
+\section{Revisión bibliográfica}\label{sec:revision}
+
+\parrafo{Familia de problemas.} La operación diaria corresponde a un problema de recogida y entrega con ventanas de tiempo (PDPTW, por su sigla en inglés), en que cada solicitud une un origen con un destino y el retiro debe preceder a la entrega en el mismo vehículo \cite{parragh_doerner_hartl_2008}. La decisión semanal de qué bases usar y qué vehículos ubicar en ellas se asemeja a un problema de localización y ruteo (LRP) \cite{prodhon_prins_2014}. La externalización \cite{dabia_lai_vigo_2019} y la combinación de división de carga con transbordos \cite{wolfinger_salazar_2021} se han estudiado como extensiones, cada una por separado. En salud, el traslado de muestras entre centros se ha modelado como un problema de ruteo con ventanas y tiempos máximos de traslado \cite{benini_detti_zabalo_2021}, y la recolección domiciliaria de muestras, como un ruteo con capacidad y horarios \cite{ettazi_2021}.
+
+\parrafo{Límites de los métodos exactos.} Los problemas de recogida y entrega son NP-difíciles porque generalizan el problema del vendedor viajero \cite{parragh_doerner_hartl_2008}: el tiempo que necesita un método exacto para probar optimalidad crece muy rápido con el número de solicitudes. En localización y ruteo, los métodos exactos resuelven de forma consistente instancias de unos 50 clientes y solo algunos casos de hasta 200 clientes con 10 a 14 depósitos; sobre ese tamaño dejan de cerrar la brecha de optimalidad en tiempos razonables \cite{prodhon_prins_2014}. Con flota propia y transportista externo, un algoritmo de ramificación y corte resolvió a optimalidad 272 de 504 instancias de hasta 100 clientes \cite{dabia_lai_vigo_2019}, y con división de carga y transbordos, el primer método exacto reportado resuelve instancias de 8 solicitudes, 3 puntos de transbordo y 2 a 3 vehículos \cite{wolfinger_salazar_2021}. Ninguno de esos trabajos combina todas las características a la vez.
+
+\parrafo{Descomposición.} Para localización y ruteo, \citeA{prodhon_prins_2014} recogen que decidir primero la localización y después las rutas, sin volver atrás, conduce a soluciones subóptimas, y destacan los métodos que descomponen el problema pero iteran entre ambas partes intercambiando información.
+
+\parrafo{Heurísticas de inserción y búsqueda local.} En el PDPTW, las heurísticas más usadas construyen rutas insertando pares retiro--entrega y luego las mejoran con movimientos que preservan el par; así se resolvió, por ejemplo, un PDPTW con transbordos mediante inserción más barata y mejora local (Mitrovi\'c-Mini\'c y Laporte, 2006, como se citó en \citeNP{parragh_doerner_hartl_2008}). GRASP \cite{feo_resende_1995} repite una construcción voraz aleatorizada y mejora cada resultado con búsqueda local; el descenso por vecindarios variables (VND) \cite{hansen_mladenovic_2001} aplica varios tipos de movimiento en orden hasta que ninguno mejora. Su combinación se ha usado en ruteo con camión y acoplado, donde el VND mejoró en promedio un 42\,\% las soluciones construidas \cite{villegas_2010}, y en recolección de residuos con ventanas y sincronización, con mejores resultados que un solver comercial en las instancias grandes \cite{perez_luis_2026}.
+
+\parrafo{Matheurísticas y generación de columnas.} Una matheurística combina una heurística con un modelo de programación matemática \cite{archetti_speranza_2014}. Un esquema frecuente en ruteo con flota heterogénea es generar rutas con una heurística y elegir la mejor combinación con un modelo de particionamiento de conjuntos \cite{subramanian_2012,subramanian_2013}. La generación de columnas formaliza ese intercambio: un problema maestro elige entre las rutas conocidas y sus precios duales indican qué rutas nuevas podrían mejorarlo, que se buscan resolviendo un subproblema de \emph{pricing} \cite{desaulniers_2005}. Cuando el pricing se resuelve con una heurística, el método ya no prueba optimalidad, pero conserva la guía de los duales \cite{archetti_speranza_2014}.
+
+\section{Alternativas metodológicas}\label{sec:alternativas}
+
+La Tabla~\ref{tab:alternativas} resume las alternativas consideradas. Un modelo exacto con variables por arco necesita una variable por vehículo y par de puntos: el día SMALL más cargado tiene 77 solicitudes, es decir, 154 puntos de retiro y entrega más 9 bases y hubs, lo que da $163\cdot162\cdot20\approx 528$ mil variables binarias solo para el ruteo, y el día BIG más cargado, $325\cdot324\cdot60\approx 6{,}3$ millones. La parte semanal, en cambio, es pequeña: contratar cada vehículo, ubicarlo en cada base, abrir cada base y habilitar cada hub suma $20+20\cdot5+5+4=129$ variables binarias en SMALL y $60+60\cdot9+9+8=617$ en BIG. Esa diferencia de escala justifica tratar el ruteo con heurísticas y reservar el modelo exacto para la decisión semanal.
+
+\begin{table}[htbp]
+\centering
+\caption{Alternativas metodológicas consideradas.}\label{tab:alternativas}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.6cm}YY}
+\toprule
+Alternativa & Ventajas & Desventajas \\
+\midrule
+MILP monolítico (ramificación y corte) & Óptimo y cota exacta; incorpora todas las restricciones. & No escala: millones de variables por día en BIG. \\
+Búsqueda adaptativa de vecindario grande (ALNS) & Flexible ante restricciones nuevas; escala bien. & No decide bien la flota semanal; muchos operadores que calibrar. \\
+GRASP + VND & Simple, rápida y siempre factible; buena diversidad. & Decide rutas día por día; no ve el costo fijo semanal. \\
+Matheurística: rutas heurísticas + particionamiento de conjuntos con generación de columnas & Decide flota, bases, hubs y rutas en un mismo modelo; los duales guían la búsqueda; entrega una cota sobre las rutas generadas. & Más compleja de implementar; la cota no es del problema completo si el pricing es heurístico. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Se elige la matheurística porque es la única alternativa que compara en un mismo modelo el costo fijo de cada vehículo con los costos variables y de externalización que ese vehículo evita, que es justamente la disyuntiva que mostró el análisis de datos.
+
+\section{Metodología propuesta}\label{sec:propuesta}
+
+\parrafo{Conceptos.} La metodología trabaja con tres objetos:
+\begin{itemize}\itemsep0pt
+\item Un \textbf{tramo} es un par retiro--entrega que un solo vehículo hace completo. Una solicitud directa es un tramo; una dividida en dos partes son dos tramos del mismo origen al mismo destino; una transferida son dos tramos, del origen al hub y del hub al destino.
+\item Un \textbf{plan} es una forma completa de atender una solicitud: el conjunto de tramos que la cubren. Cada solicitud tiene un plan directo y, si corresponde, planes de división y de transferencia.
+\item Una \textbf{ruta} es el recorrido de un vehículo en un día: sale de su base, visita en orden los retiros y entregas de varios tramos y vuelve a su base. Cada ruta es factible por construcción: respeta capacidad, compatibilidad, incompatibilidad térmica, ventanas, tiempo máximo de traslado y jornada. En el modelo maestro, cada ruta es una \emph{columna}, es decir, una variable binaria que vale 1 si la ruta se usa.
+\end{itemize}
+
+\parrafo{Lógica general.} Un \emph{modelo maestro} semanal (un MILP de particionamiento de conjuntos resuelto con Gurobi) elige qué rutas usar entre las disponibles en un \emph{pool}, y con ello decide a la vez la flota, la base de cada vehículo, los hubs, el plan de cada solicitud y qué se externaliza. Las rutas del pool las generan dos heurísticas. GRASP + VND construye soluciones diarias completas y aporta un pool inicial diverso. Luego se resuelve la relajación lineal del maestro, cuyos precios duales indican cuánto vale cubrir cada tramo y cuánto cuesta usar cada vehículo cada día. Con esos precios, una heurística de \emph{pricing} construye rutas nuevas y agrega al pool solo las de \emph{costo reducido} negativo, es decir, las que pueden bajar el costo de la relajación. Esto se repite hasta que no aparecen rutas útiles; entonces se resuelve el maestro entero. La Figura~\ref{fig:flujo} muestra el flujo completo.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  caja/.style={draw, rounded corners=2pt, align=center, font=\footnotesize, minimum height=1.05cm, text width=2.9cm, fill=white},
+  dec/.style={draw, diamond, aspect=2.3, align=center, font=\footnotesize, inner sep=0.5pt, fill=white},
+  fl/.style={-{Stealth[length=2mm]}, thick}, et/.style={font=\scriptsize, align=center}]
+\node[caja, fill=gray!12] (p1) at (0,0) {\textbf{1. Preparar}\\matriz de tiempos y planes};
+\node[caja] (p2) at (3.65,0) {\textbf{2. GRASP + VND}\\pool inicial de rutas};
+\node[caja] (p3a) at (7.3,0) {\textbf{3a. Relajación lineal}\\cota y precios duales};
+\node[caja] (p3b) at (10.95,0) {\textbf{3b. Pricing}\\con los duales, rutas de costo reducido $<0$};
+\node[caja] (p4) at (7.3,-2.3) {\textbf{4. Maestro entero}\\flota, bases, hubs, planes y rutas};
+\node[caja] (p5) at (10.95,-2.3) {\textbf{5. Post-optimización}\\inserta externalizadas};
+\node[dec] (d) at (10.95,-4.4) {¿quedan\\vueltas?};
+\node[caja] (p6) at (3.65,-4.4) {\textbf{6. Reparar}\\planes de transferencia y división};
+\node[caja, fill=gray!12] (p7) at (10.95,-6.3) {\textbf{7. Cerrar}\\mejor solución, KPIs y validación};
+\draw[fl] (p1) -- (p2);
+\draw[fl] (p2) -- (p3a);
+\draw[fl] ([yshift=0.22cm]p3a.east) -- ([yshift=0.22cm]p3b.west);
+\draw[fl] ([yshift=-0.22cm]p3b.west) -- ([yshift=-0.22cm]p3a.east);
+\draw[fl] (p3a) -- node[et, right]{sin rutas nuevas\\o mejora $<$ 0,1\,\%} (p4);
+\draw[fl] (p4) -- (p5);
+\draw[fl] (p5) -- (d);
+\draw[fl] (d) -- node[et, above]{sí} (p6);
+\draw[fl] (p6) -- (p2);
+\draw[fl] (d) -- node[et, right]{no (tras 3 vueltas)} (p7);
+\end{tikzpicture}
+\caption{Flujo de la matheurística para una semana. Los pasos 2 a 6 se repiten tres vueltas; el paso 7 toma la mejor solución encontrada.}\label{fig:flujo}
+\end{figure}
+
+\parrafo{Pasos.} (1) Una sola vez por semana se calcula la matriz de tiempos y distancias sobre la red vial y se arma el catálogo de planes: el directo de cada solicitud y, para las que exceden la capacidad de todo vehículo compatible, su división. Además, se resuelve el caso base del Capítulo~\ref{cap:casobase} y se mejoran sus rutas con el VND; esa solución entra al pool y sirve como punto de partida, de modo que la matheurística nunca entrega algo peor que la planificación por reglas. (2) GRASP + VND genera rutas para diez posicionamientos de la flota. La mitad de los arranques construye por arrepentimiento y la otra mitad en orden de urgencia (fin de la ventana de retiro); cada arranque usa una fracción sorteada, entre el 60 y el 100\,\%, de los vehículos de cada tipo, para que el pool contenga soluciones con flotas de distinto tamaño. (3) Se alternan la relajación lineal del maestro y el pricing, con un máximo de seis rondas, hasta que no aparecen rutas de costo reducido negativo o la cota mejora menos de 0,1\,\%. (4) El maestro entero elige la solución semanal partiendo de la mejor solución conocida, de modo que el costo nunca empeora entre vueltas. (5) Como el maestro solo combina rutas existentes, puede externalizar una solicitud aunque haya un vehículo pagado con tiempo libre; la post-optimización intenta insertar cada externalizada en las rutas de los vehículos ya contratados, la acepta si cuesta menos que externalizarla, y luego prueba contratar un vehículo adicional si el ahorro de la semana supera su costo fijo. El VND vuelve a acortar las rutas de la solución resultante. (6) Para las solicitudes que quedaron externalizadas o atrasadas se generan planes de transferencia y de división, que se prueban en la vuelta siguiente. (7) Tras tres vueltas se reporta la mejor solución y se valida cada restricción con un código independiente del que la generó.
+
+\parrafo{Supuestos de modelación.} Los datos no especifican algunos elementos, que se fijaron como sigue:
+\begin{itemize}\itemsep0pt
+\item \textbf{Jornada} de 08:00 a 17:00, indicada por el ayudante. El retorno después de las 17:00 se paga como sobretiempo, con un máximo de 120 minutos por vehículo y día.
+\item \textbf{Atraso} máximo de 180 minutos en las clases que lo admiten.
+\item \textbf{Tiempos de viaje} fijos, calculados con la velocidad máxima de cada calle en la red vial (velocidad media resultante de 61,6 km/h, sin congestión). Es un supuesto optimista que se evalúa en el análisis de sensibilidad.
+\item \textbf{Costo de externalización:} el de la hoja de clases (\$190.000 a \$250.000). La hoja de instancias trae exactamente el doble; se usó el primero por indicación del profesor y el segundo se evalúa como escenario.
+\item \textbf{Documentación:} los documentos que exige cada clase no restringen la asignación, porque los datos no indican qué vehículo o conductor los porta.
+\item \textbf{Personal} disponible en todos los establecimientos durante las ventanas de atención.
+\end{itemize}

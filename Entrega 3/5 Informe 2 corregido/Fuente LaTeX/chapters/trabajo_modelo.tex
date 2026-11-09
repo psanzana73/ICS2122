@@ -1,0 +1,108 @@
+\section{Implementación}\label{sec:implementacion}
+
+La herramienta está escrita en Python y usa Gurobi 13 para el modelo maestro. Cada semana se resuelve de forma independiente. El código está en el repositorio indicado en el Apéndice~\ref{ap:codigo}, y la Tabla~\ref{tab:modulos} relaciona cada módulo con la metodología.
+
+\begin{table}[htbp]
+\centering
+\caption{Módulos del código y su papel en la metodología.}\label{tab:modulos}
+\small
+\begin{tabularx}{\textwidth}{lY}
+\toprule
+Módulo & Función \\
+\midrule
+\texttt{datos.py}, \texttt{matriz.py} & Leen los datos y calculan tiempos y distancias con un algoritmo de Dijkstra por origen sobre la red vial (paso 1). \\
+\texttt{planes.py} & Genera los planes directos, de división y de transferencia, y sus tramos. \\
+\texttt{ruta.py} & Evalúa una ruta: factibilidad completa, horarios y costo. \\
+\texttt{heuristica.py} & GRASP + VND (paso 2) y pricing con duales (paso 3b). \\
+\texttt{maestro.py} & Modelo maestro y su relajación lineal (pasos 3a y 4). \\
+\texttt{completar.py} & Post-optimización por inserción (paso 5). \\
+\texttt{validacion.py} & Revisa cada restricción de la solución final desde los datos originales (paso 7). \\
+\texttt{caso\_base\_2.py} & Caso base del Capítulo~\ref{cap:casobase}. \\
+\texttt{escenarios.py} & Escenarios del análisis de sensibilidad. \\
+\texttt{analisis\_resultados.py} & Genera todas las tablas y figuras de resultados de este capítulo. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\parrafo{Entradas y salidas.} La herramienta recibe el archivo transversal, la hoja de solicitudes y la semana a resolver. Entrega, para esa semana, la flota contratada y la base de cada vehículo, los hubs habilitados, la forma de atención de cada solicitud, la secuencia y horario de cada ruta diaria, las solicitudes externalizadas, los indicadores de la Tabla~\ref{tab:kpis} y el informe de validación.
+
+\parrafo{Parámetros.} En cada vuelta, GRASP + VND prueba 10 posicionamientos de la flota (la mitad reutiliza el de la mejor solución anterior) con una fracción sorteada de entre el 60 y el 100\,\% de cada tipo de vehículo. En la construcción por arrepentimiento, la lista restringida guarda las solicitudes cuyo arrepentimiento (la diferencia entre su segunda y su primera mejor inserción) es al menos el 85\,\% del máximo; en la construcción por urgencia, se elige al azar entre las tres solicitudes más urgentes. La entrega se intercala a lo más 8 posiciones después del retiro. El pool conserva hasta 300 rutas por vehículo y día. Los planes de transferencia consideran los 3 hubs con menor desvío y hasta 3 instantes de intercambio cada 30 minutos; en cada vuelta se reparan como máximo 125 solicitudes críticas. El maestro se detiene con una brecha de 1\,\% o tras 300 unidades de trabajo de Gurobi, un límite determinista que hace que dos corridas iguales entreguen la misma solución en cualquier computador.
+
+\parrafo{Calibración.} Tres parámetros de la heurística se fijaron con un experimento sobre la semana 1 de la instancia 10, comparando la mejor solución inicial de cinco arranques (Tabla~\ref{tab:calibracion}). Penalizar la espera, como hacía la versión anterior (\$150 por minuto), empeoró las soluciones: evita rutas con tiempos muertos, pero obliga a usar más vehículos. Cobrar en la heurística la cuota diaria del costo fijo de cada vehículo ($f_k/5$) redujo la flota, pero alargó las rutas y subió el costo total en todas las combinaciones probadas, por lo que se dejó en cero: el costo fijo lo deciden el maestro, que lo paga completo, y el pricing, cuyos duales $\mu_{kd}$ lo incluyen. Sortear la fracción de la flota en cada arranque mejoró la construcción por urgencia.
+
+\begin{table}[htbp]
+\centering
+\caption{Calibración de la heurística: mejor solución inicial de cinco arranques (instancia 10, semana 1).}\label{tab:calibracion}
+\small
+\begin{tabular}{lccccc}
+\toprule
+Construcción & Espera (\$/min) & Cuota fija & Flota & Costo (MM) & Vehículos \\
+\midrule
+Arrepentimiento (v1) & 150 & No & completa & 40,05 & 46 \\
+Arrepentimiento & 150 & Sí & completa & 41,03 & 43 \\
+Arrepentimiento & 50 & No & completa & 39,49 & 47 \\
+Arrepentimiento & 50 & Sí & completa & 40,90 & 43 \\
+Arrepentimiento & 0 & No & completa & 38,97 & 43 \\
+Arrepentimiento & 0 & No & sorteada & 39,47 & 43 \\
+Urgencia & 0 & No & completa & 40,62 & 44 \\
+Urgencia & 0 & No & sorteada & 39,36 & 44 \\
+\midrule
+Caso base & -- & -- & -- & 38,87 & 34 \\
+Caso base + VND & -- & -- & -- & 37,48 & 34 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La última fila explica el diseño final. Ninguna construcción desde cero superó al caso base, que dimensiona una flota chica y la ajusta; pero sus rutas nunca se reordenan, y el VND las acorta un 3,6\,\%. Por eso la matheurística parte de esa solución y la usa como una columna más del pool.
+
+\section{Modelo maestro y pricing}\label{sec:modelo}
+
+\parrafo{Notación.} $R$ es el conjunto de solicitudes de la semana, $D$ el de días, $K$ el de vehículos, $B$ el de bases y $H$ el de hubs. $O_r$ es el conjunto de planes de la solicitud $r$, y $O^H\subseteq\bigcup_r O_r$ el de planes que pasan por un hub; $h(o)$ es el hub del plan $o$. $L$ es el conjunto de tramos y $L_o$ el de tramos del plan $o$. $\Omega_{kbd}$ es el conjunto de rutas del pool del vehículo $k$ saliendo de la base $b$ el día $d$, y $a_{\rho\ell}=1$ si la ruta $\rho$ hace el tramo $\ell$. Los costos son $f_k$ (fijo semanal del vehículo), $g_b$ (fijo de la base), $F_p$ (fijo del hub), $\pi_r$ (externalizar $r$), $c_o$ (manipulación en hub del plan $o$) y $c_\rho$ (costo de la ruta: kilómetros, sobretiempo y atraso). $\kappa_b$ es la capacidad de la base, y $\Gamma_p$ y $Q_p$ son las capacidades diarias del hub en operaciones y en unidades. Las variables binarias son $\lambda_\rho$ (se usa la ruta), $\xi_o$ (se usa el plan), $e_r$ (se externaliza), $y_k$ (se contrata el vehículo), $z_{kb}$ (el vehículo queda en la base), $u_b$ (se usa la base) y $h_p$ (se habilita el hub).
+
+\begin{align}
+\min\ & \sum_{k} f_k y_k + \sum_{b} g_b u_b + \sum_{p} F_p h_p + \sum_{r} \pi_r e_r + \sum_{o} c_o \xi_o + \sum_{\rho} c_\rho \lambda_\rho \label{eq:fo}\\
+\text{s.a.}\ & \textstyle\sum_{o\in O_r} \xi_o + e_r = 1 && \forall r\in R \quad (\alpha_r) \label{eq:m1}\\
+& \textstyle\sum_{\rho} a_{\rho\ell}\lambda_\rho = \sum_{o:\,\ell\in L_o} \xi_o && \forall \ell\in L \quad (\pi_\ell) \label{eq:m2}\\
+& \textstyle\sum_{b}\sum_{\rho\in\Omega_{kbd}} \lambda_\rho \le y_k && \forall k\in K, d\in D \quad (\mu_{kd}) \label{eq:m3}\\
+& \textstyle\sum_{\rho\in\Omega_{kbd}} \lambda_\rho \le z_{kb} && \forall k, b, d \quad (\nu_{kbd}) \label{eq:m4}\\
+& \textstyle\sum_{b} z_{kb} = y_k,\quad z_{kb}\le u_b,\quad \sum_{k} z_{kb} \le \kappa_b u_b && \forall k, b \label{eq:m5}\\
+& \xi_o \le h_{h(o)} \quad \forall o\in O^H; \qquad \textstyle\sum_{o\in O^H_{pd}} \xi_o \le \Gamma_p h_p,\ \ \sum_{o\in O^H_{pd}} q_o\xi_o \le Q_p h_p && \forall p, d \label{eq:m6}
+\end{align}
+
+La función objetivo \eqref{eq:fo} suma los tres bloques de costo de la Sección~\ref{cap:descripcion}. La restricción \eqref{eq:m1} atiende cada solicitud con un plan o la externaliza. La \eqref{eq:m2} es el vínculo entre planes y rutas: cada tramo de un plan elegido lo hace exactamente una ruta, y ningún tramo de un plan no elegido aparece en una ruta usada. La \eqref{eq:m3} permite a lo más una ruta por vehículo y día, y solo si el vehículo está contratado. La \eqref{eq:m4} obliga a que esa ruta salga de la base del vehículo. El grupo \eqref{eq:m5} asigna cada vehículo contratado a una sola base abierta y respeta su capacidad. El grupo \eqref{eq:m6} usa un plan con hub solo si el hub está habilitado y respeta su capacidad diaria, donde $O^H_{pd}$ son los planes que usan el hub $p$ el día $d$ y $q_o$ su cantidad. Las únicas restricciones que unen días distintos son las de diseño, a través de $y$, $z$, $u$ y $h$; por eso las rutas se pueden generar día por día.
+
+\parrafo{Sincronización en los hubs.} Las transferencias no necesitan restricciones de tiempo en el maestro, porque la sincronización queda fijada dentro del plan. Cada plan de transferencia fija un hub y un instante de intercambio $\gamma$. El primer tramo debe terminar de descargar en el hub antes de $\gamma$ y el segundo puede cargar desde $\gamma$, por lo que el segundo vehículo nunca recoge antes de que el primero haya descargado. Además, el segundo tramo tiene un plazo absoluto que garantiza el tiempo máximo de traslado de origen a destino, que no se reinicia en el hub. La única aproximación es que $\gamma$ se toma en una grilla de 30 minutos, lo que puede descartar algunas transferencias, pero nunca genera una infactible.
+
+\parrafo{Pricing.} Al resolver la relajación lineal se obtienen los duales $\alpha_r$, $\pi_\ell$, $\mu_{kd}\le0$ y $\nu_{kbd}\le0$ indicados en \eqref{eq:m1}--\eqref{eq:m4}. El \emph{costo reducido} de una ruta $\rho$ del vehículo $k$ desde la base $b$ el día $d$ es
+\begin{equation}
+\bar c_\rho = c_\rho - \sum_{\ell\in\rho} \pi_\ell - \mu_{kd} - \nu_{kbd}. \label{eq:cr}
+\end{equation}
+El término $\pi_\ell$ es cuánto vale para la relajación que se cubra el tramo $\ell$, y $-\mu_{kd}-\nu_{kbd}$ es cuánto cuesta usar ese vehículo ese día, incluida su parte del costo fijo. Solo las rutas con $\bar c_\rho<0$ pueden bajar el costo de la relajación. El pricing las busca con una inserción con premios. Para cada día y posicionamiento de la flota (el sugerido por la relajación y uno sorteado), inserta repetidamente el tramo y el vehículo de menor valor $\Delta c - \pi_\ell$, donde $\Delta c$ es el aumento del costo de la ruta, y suma el costo de usar el vehículo si la ruta estaba vacía. Se detiene cuando ningún valor es negativo. Cada tramo se usa una vez y, en cada solicitud, solo tramos de un mismo plan. Luego el VND acorta las rutas, y entran al pool las que tienen costo reducido negativo. Si un tramo aún no está en ninguna ruta del pool, no tiene dual propio; su precio se estima con el de su solicitud, $\alpha_r$ menos la manipulación del plan, repartido entre los tramos del plan según su cantidad.
+
+\section{Coherencia entre el código y el informe}\label{sec:auditoria}
+
+La corrección del Informe~2 señaló inconsistencias entre el código y su descripción. Se revisó el código línea por línea; la Tabla~\ref{tab:auditoria} resume lo encontrado y lo corregido. El cambio de mayor efecto fue el primero: el GRASP dejaba partes huérfanas de solicitudes divididas dentro de las rutas, y como el maestro no puede elegir una ruta que contiene un tramo de un plan incompleto, una sola parte huérfana inutilizaba la ruta completa. Con un solo arranque, en la instancia 10 semana 1, el maestro pasó de externalizar 378 de 599 solicitudes a externalizar 47.
+
+\begin{table}[htbp]
+\centering
+\caption{Inconsistencias encontradas entre el código entregado y el Informe~2, y su corrección.}\label{tab:auditoria}
+\footnotesize
+\begin{tabularx}{\textwidth}{YY}
+\toprule
+Encontrado en la versión anterior & Corrección \\
+\midrule
+Partes huérfanas de divisiones inutilizaban rutas completas para el maestro. & Se sacan esas partes de las rutas antes de agregarlas al pool. \\
+El informe describía generación de columnas, pero los duales se restaban a las dos mejores inserciones y se cancelaban en el arrepentimiento: no influían. & Pricing con costo reducido \eqref{eq:cr}; el GRASP queda como generador del pool inicial, sin duales. \\
+La heurística no consideraba el costo fijo del vehículo. & Se agregó como opción (cuota $f_k/5$ al abrir un vehículo); empeoró el costo en todas las pruebas (Tabla~\ref{tab:calibracion}), así que el costo fijo lo manejan el maestro y los duales $\mu_{kd}$ del pricing. \\
+El informe decía que todas las rutas visitadas entraban al pool. & Se describe lo que hace el código: entran las soluciones finales del GRASP y del VND de cada arranque y las rutas del pricing. \\
+Reglas no declaradas: entrega a lo más 8 posiciones después del retiro y tope de 125 solicitudes críticas por vuelta. & Se declaran (Sección~\ref{sec:implementacion}) y quedan como parámetros. \\
+El primer maestro no tenía punto de partida y, con un pool grande, terminaba con muchas externalizaciones. & La mejor solución entre el caso base mejorado con VND y el mejor arranque del GRASP es la solución inicial. \\
+Todos los vehículos de un tipo se amontonaban en las mismas tres bases al sortear el posicionamiento. & Reparto proporcional a la demanda cercana a cada base, con azar. \\
+Resultados irrepetibles sin fijar \texttt{PYTHONHASHSEED}, y dependientes de la velocidad del computador. & Recorridos en orden fijo y límite determinista de Gurobi. \\
+La Tabla~3.2 mostraba un costo de externalización del doble del que usaba el código. & Se corrige (Tabla~\ref{tab:clases}); el doble se evalúa como escenario. \\
+La directitud y las tablas de resultados no se generaban con el código entregado. & \texttt{analisis\_resultados.py} genera todas las tablas y figuras. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Además, la revisión del perfil de tiempo mostró que el 55\,\% del cómputo se iba en revisar la capacidad de rutas que luego se descartaban. Un filtro previo con el perfil de carga de la ruta redujo a menos de la mitad el tiempo del GRASP y del VND, sin cambiar ningún resultado. Finalmente, la solución del último maestro ahora también pasa por la post-optimización.

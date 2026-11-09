@@ -1,0 +1,70 @@
+\section{Código computacional}\label{ap:codigo}
+
+El código de la metodología, del caso base, de los escenarios de sensibilidad y de las figuras se encuentra en el repositorio \href{https://github.com/psanzana73/ICS2122}{\texttt{github.com/psanzana73/ICS2122}}. El archivo \texttt{README.md} explica la instalación, la licencia de Gurobi y el uso. Los resultados de este informe se reproducen con:
+\begin{verbatim}
+python correr_paralelo.py --tipo big --procesos 2 -- --hilos 2
+python correr_paralelo.py --tipo small --procesos 2 -- --hilos 2
+python correr_paralelo.py --lista tareas.txt --procesos 2 -- --hilos 2
+python caso_base_2.py --tipo big --salida outputs/base_v2
+python caso_base_2.py --tipo small --salida outputs/base_small
+bash correr_base_entrega3.sh
+python analisis_resultados.py --math outputs --base outputs/base_v2
+python analisis_entrega3.py
+python tablas_entrega3.py --informe <carpeta del informe>
+\end{verbatim}
+El archivo \texttt{tareas.txt} lista una corrida por línea (tipo, instancia, semana, escenario y semilla); los escenarios disponibles se describen en \texttt{matheuristica/escenarios.py}. Las corridas son deterministas, por lo que se pueden repartir entre varios computadores y dan el mismo resultado; así se resolvieron las 105 corridas de la sensibilidad y de SMALL.
+
+\section{Flujo del caso base}\label{ap:base}
+
+La Figura~\ref{fig:flujo_base} muestra el flujo de decisiones del caso base del Capítulo~\ref{cap:casobase}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  caja/.style={draw, rounded corners=2pt, align=center, font=\footnotesize, minimum height=0.8cm, text width=4.2cm, fill=white},
+  lado/.style={draw, rounded corners=2pt, align=center, font=\footnotesize, minimum height=0.8cm, text width=3.4cm, fill=white},
+  dec/.style={draw, diamond, aspect=2.6, align=center, font=\footnotesize, inner sep=0.5pt, fill=white},
+  fl/.style={-{Stealth[length=2mm]}, thick}, et/.style={font=\scriptsize}]
+\node[caja, fill=gray!12] (a) at (0,0) {Abrir todas las bases y estimar la carga por base, tipo de vehículo y día};
+\node[caja] (b) at (0,-1.5) {Flota inicial al 80\,\% de la jornada del día más exigente, repartida según la carga};
+\node[caja] (c) at (0,-2.95) {Tomar la siguiente solicitud del día, en orden de urgencia};
+\node[dec] (d) at (0,-4.25) {¿algún vehículo la\\intercala sin atraso?};
+\node[lado] (e) at (5.0,-4.25) {Asignarla al vehículo con menor costo adicional};
+\node[dec] (f) at (0,-6.1) {¿división, transferencia\\o atraso convienen?};
+\node[lado] (g) at (5.0,-6.1) {Asignar la alternativa interna más barata};
+\node[caja] (h) at (0,-7.6) {Externalizar};
+\node[dec] (i) at (0,-9.3) {Fin de la semana: ¿un vehículo\\adicional baja el costo?};
+\node[caja, fill=gray!12] (k) at (0,-11.0) {Fin: flota, rutas y externalizadas};
+\draw[fl] (a) -- (b); \draw[fl] (b) -- (c); \draw[fl] (c) -- (d);
+\draw[fl] (d) -- node[et, above]{sí} (e);
+\draw[fl] (d) -- node[et, right]{no} (f);
+\draw[fl] (f) -- node[et, above]{sí} (g);
+\draw[fl] (f) -- node[et, right]{no} (h);
+\draw[fl] (h) -- node[et, right]{(tras la última solicitud)} (i);
+\draw[fl] (i) -- node[et, right]{no} (k);
+\draw[fl] (i.west) -- ++(-1.3,0) |- node[et, pos=0.25, left, align=right]{sí: agregarlo y\\re-despachar\\la semana} (c.west);
+\draw[fl, dashed] (e.north) |- node[et, pos=0.75, above]{siguiente solicitud} (c.east);
+\draw[fl, dashed] (g.east) -- ++(0.4,0) |- (c.east);
+\end{tikzpicture}
+\caption{Flujo de decisiones del caso base. Las flechas punteadas pasan a la siguiente solicitud; la vuelta de la izquierda es el ajuste de la flota.}\label{fig:flujo_base}
+\end{figure}
+
+\section{Detalle de la sensibilidad por semana}\label{ap:sensibilidad}
+
+La Tabla~\ref{tab:sensdetalle} complementa la Tabla~\ref{tab:sensibilidad} con el costo de la matheurística y su ahorro frente al caso base en cada semana evaluada.
+
+\begin{table}[htbp]
+\centering
+\caption{Costo de la matheurística (MM CLP) y ahorro frente al caso base (\%) por escenario y semana. --: escenario no evaluado en esa semana.}\label{tab:sensdetalle}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccccc}
+\toprule
+ & \multicolumn{2}{c}{Inst. 1, sem. 1} & \multicolumn{2}{c}{Inst. 7, sem. 4} & \multicolumn{2}{c}{Inst. 8, sem. 3} & \multicolumn{2}{c}{Inst. 10, sem. 3} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+Escenario & Costo & Ahorro & Costo & Ahorro & Costo & Ahorro & Costo & Ahorro \\
+\midrule
+\tabinput{tablas/sens_detalle.tex}
+\bottomrule
+\end{tabular}
+\end{table}

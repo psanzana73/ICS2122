@@ -1,0 +1,18 @@
+[paralelo] 17 tareas con 3 procesos
+[paralelo] 1/17 big_Instancia8_semana3_sem1: OK (25 min) | 25 min totales
+[paralelo] 2/17 big_Instancia10_semana3_sem2: OK (32 min) | 32 min totales
+[paralelo] 3/17 big_Instancia10_semana3_sem1: OK (32 min) | 32 min totales
+[paralelo] 4/17 big_Instancia8_semana3_sem2: OK (28 min) | 53 min totales
+[paralelo] 5/17 big_Instancia8_semana3_sem3: OK (29 min) | 61 min totales
+[paralelo] 6/17 big_Instancia10_semana3_sem3: OK (31 min) | 62 min totales
+[paralelo] 7/17 big_Instancia10_semana3_esc-furgon+2: OK (32 min) | 85 min totales
+[paralelo] 8/17 big_Instancia10_semana3_esc-furgon+4: OK (36 min) | 97 min totales
+[paralelo] 9/17 big_Instancia10_semana3_esc-furgon+8: OK (38 min) | 101 min totales
+[paralelo] 10/17 big_Instancia7_semana4_sem1: OK (30 min) | 115 min totales
+[paralelo] 11/17 big_Instancia1_semana1_sem1: OK (24 min) | 120 min totales
+[paralelo] 12/17 big_Instancia7_semana4_sem2: OK (30 min) | 131 min totales
+[paralelo] 13/17 big_Instancia1_semana1_sem2: OK (22 min) | 137 min totales
+[paralelo] 14/17 big_Instancia7_semana4_sem3: OK (31 min) | 151 min totales
+[paralelo] 15/17 big_Instancia1_semana1_sem3: OK (22 min) | 153 min totales
+[paralelo] 16/17 big_Instancia7_semana4_esc-furgon+2: OK (30 min) | 167 min totales
+[paralelo] 17/17 big_Instancia7_semana4_esc-furgon+8: OK (27 min) | 178 min totales

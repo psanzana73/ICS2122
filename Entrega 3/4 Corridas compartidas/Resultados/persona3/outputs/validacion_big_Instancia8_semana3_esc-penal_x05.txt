@@ -1,0 +1,31 @@
+ERRORES
+(ninguno)
+
+ALERTAS
+D1_R100 (día 1, INSUMO_GENERAL, q=82, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_09, VAN_GENERAL_10
+D1_R112 (día 1, INSUMO_GENERAL, q=82, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_09, VAN_GENERAL_10
+D1_R116 (día 1, INSUMO_GENERAL, q=88, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_09, VAN_GENERAL_10
+D1_R16 (día 1, INSUMO_GENERAL, q=75, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_09, VAN_GENERAL_10
+D1_R22 (día 1, INSUMO_GENERAL, q=90, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_09, VAN_GENERAL_10
+D1_R34 (día 1, INSUMO_GENERAL, q=77, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_09, VAN_GENERAL_10
+D1_R36 (día 1, INSUMO_GENERAL, q=90, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_09, VAN_GENERAL_10
+D1_R52 (día 1, INSUMO_GENERAL, q=88, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_09, VAN_GENERAL_10
+D1_R82 (día 1, INSUMO_GENERAL, q=46, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_FRIO_04, VAN_FRIO_08
+D2_R167 (día 2, INSUMO_GENERAL, q=83, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_08, VAN_GENERAL_10
+D2_R173 (día 2, INSUMO_GENERAL, q=80, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_08, VAN_GENERAL_10
+D2_R187 (día 2, INSUMO_GENERAL, q=80, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_08, VAN_GENERAL_10
+D2_R191 (día 2, INSUMO_GENERAL, q=77, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_08, VAN_GENERAL_10
+D2_R195 (día 2, INSUMO_GENERAL, q=89, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_08, VAN_GENERAL_10
+D2_R209 (día 2, INSUMO_GENERAL, q=90, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_08, VAN_GENERAL_10
+D2_R224 (día 2, INSUMO_GENERAL, q=80, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_GENERAL_08, VAN_GENERAL_10
+D2_R268 (día 2, INSUMO_GENERAL, q=73, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_07, VAN_FRIO_05, VAN_FRIO_06
+D4_R439 (día 4, INSUMO_GENERAL, q=76, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_06, VAN_GENERAL_07, VAN_GENERAL_08
+D4_R451 (día 4, INSUMO_GENERAL, q=80, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_06, VAN_GENERAL_07, VAN_GENERAL_08
+D4_R473 (día 4, INSUMO_GENERAL, q=72, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_FRIO_04, VAN_FRIO_09, VAN_GENERAL_06
+D4_R505 (día 4, INSUMO_GENERAL, q=86, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_06, VAN_GENERAL_07, VAN_GENERAL_08
+D4_R509 (día 4, INSUMO_GENERAL, q=74, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_06, VAN_GENERAL_07, VAN_FRIO_04
+D4_R537 (día 4, INSUMO_GENERAL, q=89, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_06, VAN_GENERAL_07, VAN_GENERAL_08
+D4_R541 (día 4, INSUMO_GENERAL, q=73, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_06, VAN_FRIO_04, VAN_FRIO_09
+D5_R584 (día 5, INSUMO_GENERAL, q=71, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_FRIO_09, VAN_FRIO_10, VAN_GENERAL_11
+D5_R661 (día 5, INSUMO_GENERAL, q=72, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_FRIO_09, VAN_FRIO_10, VAN_GENERAL_11
+D5_R689 (día 5, INSUMO_GENERAL, q=73, penalización $95,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_11, VAN_FRIO_09, VAN_FRIO_10

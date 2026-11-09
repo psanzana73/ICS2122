@@ -1,0 +1,27 @@
+\begin{table}[htbp]
+\centering
+\caption{Resultados de la sensibilidad. Costo en MM CLP; vehículos y externalizadas de la matheurística.}\label{tab:sensibilidad}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccccccc}
+\toprule
+ & \multicolumn{5}{c}{Instancia 7, semana 4} & \multicolumn{5}{c}{Instancia 10, semana 3} \\
+\cmidrule(lr){2-6}\cmidrule(lr){7-11}
+Escenario & Base & Matheur. & Ahorro (\%) & Veh. & Ext. & Base & Matheur. & Ahorro (\%) & Veh. & Ext. \\
+\midrule
+\tabinput{tablas/sensibilidad.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\parrafo{La ventaja se mantiene.} La Tabla~\ref{tab:sensibilidad} resume las 22 corridas, todas validadas sin errores. La matheurística es más barata que el caso base en los 24 casos, con ahorros entre 7,3 y 10,2\,\%. Ningún supuesto evaluado hace desaparecer el beneficio de coordinar. Tres de los cuatro ahorros más bajos (7,3 a 7,7\,\%) aparecen en los escenarios con más externalizaciones (externalización barata y más demanda en la semana más exigente): esa parte del costo la pagan casi por igual ambos métodos y queda menos ruteo que optimizar.
+
+\parrafo{Demanda y flota.} Con $20$\,\% más demanda, el costo de la matheurística sube un 22 a 24\,\%, más que la demanda, porque la flota apenas crece (de 33 a 37 y de 37 a 40 vehículos) y las externalizaciones más que se duplican (de 8 a 19 y de 20 a 44). La flota no puede crecer donde hace falta: los 18 furgones ya estaban todos en uso. Con $20$\,\% menos demanda el costo baja un 17 a 19\,\%. Retirar un cuarto de la flota sube el costo un 4 a 5\,\% (\$1,7 a \$1,9 millones por semana): con solo 14 furgones, la matheurística contrata más vans generales (de 7 a 10 en la instancia 7) y externaliza más, aunque bastante menos que el caso base (17 contra 28 solicitudes en la instancia 7). Estos tres escenarios confirman que el furgón es el recurso que limita la red.
+
+\parrafo{Tiempos de viaje y jornada.} Una congestión de $30$\,\% sube el costo un 4\,\% y una de $50$\,\% entre 9 y 10\,\%: la red absorbe la mayor parte agregando 2 a 5 vehículos, y las externalizaciones crecen sobre todo en la semana más exigente (de 20 a 30). Como los tiempos usados suponen flujo libre, los costos reportados deben leerse como un piso. Partir la jornada a las 07:00 casi no cambia el costo en la semana mediana ($-0{,}1$\,\%) y lo baja un 1,4\,\% (\$0,6 millones por semana) en la más exigente, donde permite atender antes de las 08:00 los retiros tempranos con dos vehículos menos.
+
+\parrafo{Costo de externalizar.} Si externalizar cuesta la mitad, la matheurística externaliza 44 y 56 solicitudes, entre tres y cinco veces más, y recorre un 20\,\% menos. Si cuesta el doble, externaliza casi lo mismo (8 y 15) y el costo sube un 5 a 8\,\%: esas solicitudes no se pueden atender con la flota disponible a ningún precio razonable, lo que refuerza el diagnóstico de la Sección~\ref{sec:resultados}. La ambigüedad del dato (la hoja de instancias trae el doble) cambia el nivel de costo, pero no la estructura de la solución ni la ventaja del método.
+
+\parrafo{Infraestructura (objetivo O4).} Con el costo de las bases duplicado, la matheurística sigue usando las nueve: cada base cuesta entre \$130.000 y \$185.000 por semana, menos que los kilómetros que ahorra tener los vehículos cerca de la demanda. Cerrar Talagante, la base más periférica, no sube el costo; lo baja un 0,7\,\%, un monto del orden de su costo fijo (\$135.000), porque sus vehículos se reubican en otras bases y los kilómetros suben menos de 1\,\%. Esto sugiere evaluar su cierre con más semanas antes de recomendarlo. Ofrecer planes de transferencia para todas las solicitudes transferibles no cambia la solución (se usa a lo más un hub): los hubs no aportan con estos datos, y su bajo uso en los resultados no se debía a la forma de generar los planes.
+
+\parrafo{Utilización del caso base.} Con una utilización de 60, 70, 80, 90 y 100\,\% para dimensionar su flota inicial, el caso base cuesta en promedio 40,15, 39,38, 39,03, 38,85 y 38,85 millones por semana en las 40 semanas BIG: desde 80\,\% el ajuste de flota compensa la diferencia. Contra el mejor de ellos, el ahorro de la matheurística sigue siendo de 9,5\,\%, de modo que la comparación no depende de ese parámetro.

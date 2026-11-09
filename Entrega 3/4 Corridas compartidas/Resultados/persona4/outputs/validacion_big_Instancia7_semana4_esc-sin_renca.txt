@@ -1,0 +1,5 @@
+ERRORES
+(ninguno)
+
+ALERTAS
+(ninguna)

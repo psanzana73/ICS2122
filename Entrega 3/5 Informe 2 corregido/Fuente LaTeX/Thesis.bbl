@@ -1,0 +1,383 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+Archetti%
+\ \BBA {} Speranza%
+}{%
+Archetti%
+\ \BBA {} Speranza%
+}{%
+{\protect \APACyear {2014}}%
+}]{%
+archetti_speranza_2014}
+\APACinsertmetastar {%
+archetti_speranza_2014}%
+\begin{APACrefauthors}%
+Archetti, C.%
+\BCBT {}\ \BBA {} Speranza, M\BPBI G.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2014}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A survey on matheuristics for routing problems} {A survey on matheuristics for routing problems}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{EURO Journal on Computational Optimization}{2}{4}{223--246}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Benini%
+, Detti%
+\BCBL {}\ \BBA {} Zabalo Manrique~de Lara%
+}{%
+Benini%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2021}}%
+}]{%
+benini_detti_zabalo_2021}
+\APACinsertmetastar {%
+benini_detti_zabalo_2021}%
+\begin{APACrefauthors}%
+Benini, M.%
+, Detti, P.%
+\BCBL {}\ \BBA {} Zabalo Manrique~de Lara, G.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2021}{}{}.
+\newblock
+\APACrefbtitle {A vehicle routing problem for biological sample transportation in healthcare: Mathematical formulations and a metaheuristic approach.} {A vehicle routing problem for biological sample transportation in healthcare: Mathematical formulations and a metaheuristic approach.}
+\newblock
+\APAChowpublished {arXiv:2104.09275}.
+\newblock
+\begin{APACrefDOI} \doi{10.48550/arXiv.2104.09275} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Dabia%
+, Lai%
+\BCBL {}\ \BBA {} Vigo%
+}{%
+Dabia%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2019}}%
+}]{%
+dabia_lai_vigo_2019}
+\APACinsertmetastar {%
+dabia_lai_vigo_2019}%
+\begin{APACrefauthors}%
+Dabia, S.%
+, Lai, D.%
+\BCBL {}\ \BBA {} Vigo, D.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2019}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {An Exact Algorithm for a Rich Vehicle Routing Problem with Private Fleet and Common Carrier} {An exact algorithm for a rich vehicle routing problem with private fleet and common carrier}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Transportation Science}{53}{4}{986--1000}.
+\newblock
+\begin{APACrefDOI} \doi{10.1287/trsc.2018.0852} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Desaulniers%
+, Desrosiers%
+\BCBL {}\ \BBA {} Solomon%
+}{%
+Desaulniers%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2005}}%
+}]{%
+desaulniers_2005}
+\APACinsertmetastar {%
+desaulniers_2005}%
+\begin{APACrefauthors}%
+Desaulniers, G.%
+, Desrosiers, J.%
+\BCBL {}\ \BBA {} Solomon, M\BPBI M.%
+\end{APACrefauthors}%
+\ (\BEDS).
+\unskip\
+\newblock
+\APACrefYear{2005}.
+\newblock
+\APACrefbtitle {Column Generation} {Column generation}.
+\newblock
+\APACaddressPublisher{}{Springer}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Ettazi%
+, Rafalia%
+\BCBL {}\ \BBA {} Abouchabaka%
+}{%
+Ettazi%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2021}}%
+}]{%
+ettazi_2021}
+\APACinsertmetastar {%
+ettazi_2021}%
+\begin{APACrefauthors}%
+Ettazi, H.%
+, Rafalia, N.%
+\BCBL {}\ \BBA {} Abouchabaka, J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2021}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A Vehicle Routing Problem for the Collection of Medical Samples at Home: Case Study of {M}orocco} {A vehicle routing problem for the collection of medical samples at home: Case study of {M}orocco}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{International Journal of Advanced Computer Science and Applications}{12}{4}{345--351}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Feo%
+\ \BBA {} Resende%
+}{%
+Feo%
+\ \BBA {} Resende%
+}{%
+{\protect \APACyear {1995}}%
+}]{%
+feo_resende_1995}
+\APACinsertmetastar {%
+feo_resende_1995}%
+\begin{APACrefauthors}%
+Feo, T\BPBI A.%
+\BCBT {}\ \BBA {} Resende, M\BPBI G\BPBI C.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1995}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Greedy randomized adaptive search procedures} {Greedy randomized adaptive search procedures}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Global Optimization}{6}{}{109--133}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Hansen%
+\ \BBA {} Mladenovi{\'c}%
+}{%
+Hansen%
+\ \BBA {} Mladenovi{\'c}%
+}{%
+{\protect \APACyear {2001}}%
+}]{%
+hansen_mladenovic_2001}
+\APACinsertmetastar {%
+hansen_mladenovic_2001}%
+\begin{APACrefauthors}%
+Hansen, P.%
+\BCBT {}\ \BBA {} Mladenovi{\'c}, N.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2001}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Variable neighborhood search: Principles and applications} {Variable neighborhood search: Principles and applications}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{European Journal of Operational Research}{130}{3}{449--467}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Parragh%
+, Doerner%
+\BCBL {}\ \BBA {} Hartl%
+}{%
+Parragh%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2008}}%
+}]{%
+parragh_doerner_hartl_2008}
+\APACinsertmetastar {%
+parragh_doerner_hartl_2008}%
+\begin{APACrefauthors}%
+Parragh, S\BPBI N.%
+, Doerner, K\BPBI F.%
+\BCBL {}\ \BBA {} Hartl, R\BPBI F.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2008}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A survey on pickup and delivery problems. Part II: Transportation between pickup and delivery locations} {A survey on pickup and delivery problems. part ii: Transportation between pickup and delivery locations}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal für Betriebswirtschaft}{58}{2}{81--117}.
+\newblock
+\begin{APACrefDOI} \doi{10.1007/s11301-008-0036-4} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+P{\'e}rez-Luis%
+, Meli{\'a}n-Batista%
+\BCBL {}\ \BBA {} Moreno-Vega%
+}{%
+P{\'e}rez-Luis%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2026}}%
+}]{%
+perez_luis_2026}
+\APACinsertmetastar {%
+perez_luis_2026}%
+\begin{APACrefauthors}%
+P{\'e}rez-Luis, O\BPBI J.%
+, Meli{\'a}n-Batista, B.%
+\BCBL {}\ \BBA {} Moreno-Vega, J\BPBI M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2026}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A hybrid algorithm based on {GRASP} and variable neighborhood descent guided by machine learning for waste collection synchronization} {A hybrid algorithm based on {GRASP} and variable neighborhood descent guided by machine learning for waste collection synchronization}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Expert Systems with Applications}{329}{}{132948}.
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.eswa.2026.132948} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Prodhon%
+\ \BBA {} Prins%
+}{%
+Prodhon%
+\ \BBA {} Prins%
+}{%
+{\protect \APACyear {2014}}%
+}]{%
+prodhon_prins_2014}
+\APACinsertmetastar {%
+prodhon_prins_2014}%
+\begin{APACrefauthors}%
+Prodhon, C.%
+\BCBT {}\ \BBA {} Prins, C.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2014}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A survey of recent research on location-routing problems} {A survey of recent research on location-routing problems}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{European Journal of Operational Research}{238}{1}{1--17}.
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.ejor.2014.01.005} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Subramanian%
+, Penna%
+, Uchoa%
+\BCBL {}\ \BBA {} Ochi%
+}{%
+Subramanian%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2012}}%
+}]{%
+subramanian_2012}
+\APACinsertmetastar {%
+subramanian_2012}%
+\begin{APACrefauthors}%
+Subramanian, A.%
+, Penna, P\BPBI H\BPBI V.%
+, Uchoa, E.%
+\BCBL {}\ \BBA {} Ochi, L\BPBI S.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2012}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A hybrid algorithm for the heterogeneous fleet vehicle routing problem} {A hybrid algorithm for the heterogeneous fleet vehicle routing problem}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{European Journal of Operational Research}{221}{2}{285--295}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Subramanian%
+, Uchoa%
+\BCBL {}\ \BBA {} Ochi%
+}{%
+Subramanian%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2013}}%
+}]{%
+subramanian_2013}
+\APACinsertmetastar {%
+subramanian_2013}%
+\begin{APACrefauthors}%
+Subramanian, A.%
+, Uchoa, E.%
+\BCBL {}\ \BBA {} Ochi, L\BPBI S.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2013}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A hybrid algorithm for a class of vehicle routing problems} {A hybrid algorithm for a class of vehicle routing problems}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Computers \& Operations Research}{40}{10}{2519--2531}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Villegas%
+, Prins%
+, Prodhon%
+, Medaglia%
+\BCBL {}\ \BBA {} Velasco%
+}{%
+Villegas%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2010}}%
+}]{%
+villegas_2010}
+\APACinsertmetastar {%
+villegas_2010}%
+\begin{APACrefauthors}%
+Villegas, J\BPBI G.%
+, Prins, C.%
+, Prodhon, C.%
+, Medaglia, A\BPBI L.%
+\BCBL {}\ \BBA {} Velasco, N.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2010}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{GRASP/VND} and multi-start evolutionary local search for the single truck and trailer routing problem with satellite depots} {{GRASP/VND} and multi-start evolutionary local search for the single truck and trailer routing problem with satellite depots}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Engineering Applications of Artificial Intelligence}{23}{}{780--794}.
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.engappai.2010.01.013} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Wolfinger%
+\ \BBA {} Salazar-Gonz{\'a}lez%
+}{%
+Wolfinger%
+\ \BBA {} Salazar-Gonz{\'a}lez%
+}{%
+{\protect \APACyear {2021}}%
+}]{%
+wolfinger_salazar_2021}
+\APACinsertmetastar {%
+wolfinger_salazar_2021}%
+\begin{APACrefauthors}%
+Wolfinger, D.%
+\BCBT {}\ \BBA {} Salazar-Gonz{\'a}lez, J\BHBI J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2021}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {The Pickup and Delivery Problem with Split Loads and Transshipments: A Branch-and-Cut Solution Approach} {The pickup and delivery problem with split loads and transshipments: A branch-and-cut solution approach}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{European Journal of Operational Research}{289}{2}{470--484}.
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.ejor.2020.07.032} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}

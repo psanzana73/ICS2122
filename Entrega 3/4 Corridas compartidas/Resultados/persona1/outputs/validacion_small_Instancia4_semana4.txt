@@ -1,0 +1,5 @@
+ERRORES
+(ninguno)
+
+ALERTAS
+D5_R265 (día 5, INSUMO_GENERAL, q=90, penalización $190,000) externalizada aunque vehículos ya pagados sin salir podían atenderla: VAN_GENERAL_03, VAN_GENERAL_04, VAN_GENERAL_07
