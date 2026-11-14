@@ -71,7 +71,7 @@ Ubicación & Vehículos & Cambio de costo & Externalizadas & Vehículos & Cambio
 \parrafo{Evaluación del piloto.} El éxito se mide con los indicadores de la Sección~\ref{sec:kpis}, comparando la zona piloto con el resto de la red antes y durante el piloto, para descontar los cambios de demanda que afectan a ambas por igual. Se proponen cuatro criterios:
 \begin{enumerate}\itemsep0pt
 \item \emph{Costo}: el costo por solicitud atendida baja al menos un 5\,\%, la mitad del ahorro estimado en este informe, para dejar margen a la diferencia entre lo planificado y lo real. Con ocho semanas de piloto y la variabilidad semanal observada, un ahorro de esa magnitud es detectable con una prueba pareada.
-\item \emph{Servicio}: el porcentaje de entregas atrasadas y de solicitudes externalizadas no aumenta. Como la sensibilidad mostró que prohibir el atraso no encarece la operación, el piloto debería correr sin atraso permitido.
+\item \emph{Servicio}: el porcentaje de entregas atrasadas y de solicitudes externalizadas no aumenta.
 \item \emph{Cumplimiento del plan}: al menos el 90\,\% de las rutas se ejecuta como se planificó. Si los conductores o los centros no pueden cumplir los horarios, el ahorro planificado no se materializa.
 \item \emph{Adopción}: los planificadores usan la herramienta cada semana y el tiempo que dedican a planificar no aumenta.
 \end{enumerate}
@@ -81,7 +81,7 @@ Los principales riesgos son que los tiempos reales sean mayores que los de flujo
 
 El análisis anterior sugiere cinco mejoras, ordenadas por su impacto esperado:
 \begin{enumerate}\itemsep0pt
-\item \emph{Tiempos de viaje según la hora.} La sensibilidad muestra que la congestión es lo que más mueve el costo después de la demanda; usar tiempos que dependan de la hora del día, estimados con los registros de la marcha blanca, haría el plan más realista.
+\item \emph{Tiempos de viaje según la hora.} Los tiempos actuales suponen flujo libre, el supuesto más optimista del modelo; usar tiempos que dependan de la hora del día, estimados con los registros de la marcha blanca, haría el plan más realista.
 \item \emph{Ubicación de la flota en el maestro.} Hoy la base de cada vehículo la fija GRASP al generar las rutas, y el cierre de bases mostró que eso deja ahorros sin capturar. Generar las rutas de cada vehículo desde varias bases, o reubicar vehículos entre vueltas según los duales de capacidad de las bases, permitiría al maestro elegir mejor dónde ubicar la flota.
 \item \emph{División simultánea en la post-optimización.} Seis externalizaciones en las 40 semanas se podrían evitar dividiendo un insumo grande entre dos o tres vehículos ya pagados (Sección~\ref{sec:resultados}); probar esas combinaciones es una mejora acotada.
 \item \emph{Demanda incierta.} El modelo supone que las solicitudes de la semana se conocen de antemano. Una extensión natural es reservar capacidad para solicitudes urgentes y reoptimizar cada día con las que llegan.

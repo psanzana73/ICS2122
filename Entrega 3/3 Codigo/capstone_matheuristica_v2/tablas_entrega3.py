@@ -146,14 +146,12 @@ def main():
   E = leer("escenarios.csv")
   NOMBRES = [("demanda-20", r"Demanda $-20$\,\%"), ("demanda-10", r"Demanda $-10$\,\%"),
              ("demanda+10", r"Demanda $+10$\,\%"), ("demanda+20", r"Demanda $+20$\,\%"),
-             ("demanda+30", r"Demanda $+30$\,\%"), ("flota-25", r"Flota $-25$\,\%"),
-             ("congestion15", r"Congestión $+15$\,\%"), ("congestion30", r"Congestión $+30$\,\%"),
-             ("congestion50", r"Congestión $+50$\,\%"), ("ventanas+30", r"Ventanas $+30$ min"),
-             ("ventanas-15", r"Ventanas $-15$ min"), ("jornada7", "Jornada desde las 07:00"),
-             ("sin_atraso", "Sin atraso permitido"), ("penal_x05", r"Externalización $\times0{,}5$"),
-             ("penal_x2", r"Externalización $\times2$"), ("bases_fijo_x2", r"Costo de bases $\times2$"),
-             ("cap_bases+50", r"Capacidad de bases $+50$\,\%"), ("cap_bases-25", r"Capacidad de bases $-25$\,\%"),
-             ("hubs_todas", "Hubs para todas"), ("sin_division", "Sin división")]
+             ("demanda+30", r"Demanda $+30$\,\%"),
+             ("penal_x05", r"Externalización $\times0{,}5$"), ("penal_x2", r"Externalización $\times2$"),
+             ("flota-40", r"Flota $-40$\,\%"), ("flota-25", r"Flota $-25$\,\%"),
+             ("flota-10", r"Flota $-10$\,\%"), ("flota+25", r"Flota $+25$\,\%"),
+             ("bases_fijo_x2", r"Costo de bases $\times2$"),
+             ("cap_bases+50", r"Capacidad de bases $+50$\,\%"), ("cap_bases-25", r"Capacidad de bases $-25$\,\%")]
   filas = []
   for e, nom in NOMBRES:
     g = [r for r in E if r["escenario"] == e]
@@ -229,12 +227,12 @@ def main():
   fig, axs = plt.subplots(1, 2, figsize=(7.5, 3.0), sharey=False)
   estilos = {(7, 4): ("#1f4e79", "o", "Instancia 7, semana 4"), (10, 3): ("#b85c00", "s", "Instancia 10, semana 3")}
   for ax, (pref, xs, xl) in zip(axs, (("demanda", [-20, -10, 0, 10, 20, 30], "Cambio en la demanda (%)"),
-                                      ("congestion", [0, 15, 30, 50], "Aumento de los tiempos de viaje (%)"))):
+                                      ("flota", [-40, -25, -10, 0, 25], "Cambio en la flota disponible (%)"))):
     for (i, w), (c, mk, lab) in estilos.items():
       for metodo, ls, fill in (("math", "-", c), ("base", "--", "white")):
         ys = []
         for x in xs:
-          e = "base" if x == 0 else (f"{pref}{x:+d}" if pref == "demanda" else f"{pref}{x}")
+          e = "base" if x == 0 else f"{pref}{x:+d}"
           r = next((r for r in E if r["escenario"] == e and int(r["instancia"]) == i and int(r["semana"]) == w), None)
           ys.append(float(r[metodo]) if r else float("nan"))
         ax.plot(xs, ys, ls, color=c, marker=mk, mfc=fill, ms=5, lw=1.2,
@@ -246,7 +244,41 @@ def main():
   h, l = axs[0].get_legend_handles_labels()
   fig.legend(h, l, loc="lower center", ncol=2, frameon=False, fontsize=8)
   fig.tight_layout(rect=(0, 0.17, 1, 1))
-  fig.savefig(FIG / "fig_demanda_congestion.png", dpi=200)
+  fig.savefig(FIG / "fig_demanda_flota.png", dpi=200)
+
+  # ---------- tamaño de la red ----------
+  if (A / "tamanos.csv").exists():
+    T = leer("tamanos.csv")
+    tams = sorted({int(r["tamano"]) for r in T})
+    filas = []
+    xs, ys, lo_, hi_ = [], [], [], []
+    for t in tams:
+      g = [r for r in T if int(r["tamano"]) == t]
+      ah = [float(r["ahorro_pct"]) for r in g]
+      m = lambda k: st.mean(float(r[k]) for r in g)
+      filas.append(f"{pct(t,0)} & {f(m('solicitudes'),0)} & {len(g)} & {f(m('base'),2)} & {f(m('math'),2)} & "
+                   f"{pct(st.mean(ah))} ({f(min(ah))}--{f(max(ah))}) & {f(m('veh_base'),1)} / {f(m('veh_math'),1)} & "
+                   f"{f(m('ext_base'),1)} / {f(m('ext_math'),1)} \\\\")
+      xs.append(m("solicitudes")); ys.append(st.mean(ah)); lo_.append(min(ah)); hi_.append(max(ah))
+    (TAB / "tamanos.tex").write_text("\n".join(filas) + "\n", encoding="utf-8")
+    fig, ax = plt.subplots(figsize=(6.0, 3.2))
+    for r in T:
+      ax.plot(float(r["solicitudes"]), float(r["ahorro_pct"]), "o", color="#9fb3ca", ms=4, zorder=1)
+    ax.plot(xs, ys, "-o", color="#1f4e79", ms=6, lw=1.5, zorder=2, label="Semanas generadas (promedio por tamaño)")
+    real = leer("small.csv")
+    ax.plot(st.mean(float(r["solicitudes"]) for r in real), st.mean(float(r["ahorro_pct"]) for r in real),
+            "D", color="#b85c00", ms=7, zorder=3, label="SMALL real (promedio)")
+    ax.plot(st.mean(x["sol"] for x in big), st.mean(x["ahorro"] for x in big), "s", color="#b85c00", ms=7, zorder=3, label="BIG real (promedio)")
+    for t, x, y in zip(tams, xs, ys):
+      ax.annotate(f"{t/100:.2f}".rstrip("0").rstrip(".").replace(".", ",") + "×", (x, y), textcoords="offset points",
+                  xytext=(0, 8), ha="center", fontsize=8)
+    ax.set_xlabel("Solicitudes por semana")
+    ax.set_ylabel("Ahorro frente al caso base (%)")
+    ax.grid(alpha=0.3, lw=0.5)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.legend(frameon=False, fontsize=8)
+    fig.tight_layout()
+    fig.savefig(FIG / "fig_tamanos.png", dpi=200)
   print("tablas y figuras listas en", a.informe)
 
 

@@ -54,6 +54,8 @@ esc = []
 for i, s in SEMANAS:
   for p in sorted(O.glob(f"kpis_big_Instancia{i}_semana{s}_esc-*.csv")):
     e = p.stem.split("_esc-")[1]
+    if e.startswith("tam"):
+      continue
     b = kpi(O / "sens_base" / f"kpis_BASE_big_Instancia{i}_semana{s}_esc-{e}.csv")
     if b is None:
       print("sin base:", i, s, e)
@@ -68,6 +70,18 @@ for f in esc:
   f["dcosto_math_pct"] = round(100 * (f["math"] - r["math"]) / r["math"], 2)
   f["dcosto_base_pct"] = round(100 * (f["base"] - r["base"]) / r["base"], 2)
 guardar("escenarios.csv", esc)
+
+# 2b. tamaño de la red (semanas generadas de 25 a 200 % de BIG)
+tam = []
+for p in sorted(O.glob("kpis_big_Instancia1_semana1_esc-tam*.csv")):
+  e = p.stem.split("_esc-")[1]
+  b = kpi(O / "tamanos" / f"kpis_BASE_big_Instancia1_semana1_esc-{e}.csv")
+  if b is None:
+    continue
+  pct_, rep = e[3:].split("_r")
+  tam.append(fila(kpi(p), b, tamano=int(pct_), replica=int(rep)))
+if tam:
+  guardar("tamanos.csv", tam)
 
 # 3. semillas
 sem = []

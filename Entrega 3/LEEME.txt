@@ -3,17 +3,20 @@ Entrega final (informe, presentación, código y corridas)
 
 1 Informe final
   Informe final G12.pdf es el informe compilado.
+  Explicacion Entrega 3 - G12.docx explica todo lo que se hizo, los resultados y las preguntas probables.
   Fuente LaTeX tiene todo para recompilarlo (Thesis.tex, capítulos, tablas y figuras).
   Se compila con pdflatex, bibtex, pdflatex y pdflatex.
 
 2 Presentacion
-  Presentacion final G12.pdf con las 20 diapositivas para el 24 de noviembre.
-  En la portada falta poner los nombres de los integrantes.
+  Presentacion final G12 - diseño nuevo.pdf para el 24 de noviembre (33 diapositivas).
+  Guion presentacion final G12.docx tiene el guion de cada diapositiva y el reparto entre 3 personas.
 
 3 Codigo
   capstone_matheuristica_v2 es el código final de la matheurística y del caso base.
   El README.md explica cómo instalarlo y correrlo (requiere licencia de Gurobi).
   La carpeta outputs trae los resultados de todas las corridas usadas en el informe.
+  matheuristica/generador.py genera las semanas de distinto tamaño (análisis por tamaño, escenario tamPPP_rR).
+  outputs/tamanos tiene los casos base de esas semanas y outputs/analisis_e3/tamanos.csv el resumen.
 
 4 Corridas compartidas
   Resultados de las corridas que hizo cada integrante para la Entrega 3.

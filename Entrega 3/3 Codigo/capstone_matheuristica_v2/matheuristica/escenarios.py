@@ -12,7 +12,8 @@ Paramétricos:   demanda+N / demanda-N (N en %), congestionN (N en %),
                 p. ej. sin_talagante, sin_macul, sin_san_bernardo),
                 base_en_<hub> (abre una base nueva en ese punto, p. ej. base_en_providencia),
                 ventanas+N / ventanas-N (ventanas N min más anchas o angostas),
-                sin_division, cap_bases+N / cap_bases-N (capacidad de cada base N % mayor o menor)
+                sin_division, cap_bases+N / cap_bases-N (capacidad de cada base N % mayor o menor),
+                tamPPP_rR (semana generada de PPP % del tamaño BIG, réplica R; ver generador.py)
 """
 
 from __future__ import annotations
@@ -42,12 +43,18 @@ DESCRIPCION = {
 def describir(nombre: str) -> str:
     if nombre in DESCRIPCION:
         return DESCRIPCION[nombre]
+    m = re.fullmatch(r"tam(\d+)_r(\d+)", nombre)
+    if m:
+        return f"Semana generada de {int(m[1])} % del tamaño BIG (réplica {m[2]})"
     m = re.fullmatch(r"demanda([+-])(\d+)", nombre)
     if m:
         return f"{m[2]} % {'más' if m[1] == '+' else 'menos'} solicitudes"
     m = re.fullmatch(r"congestion(\d+)", nombre)
     if m:
         return f"Tiempos de viaje {m[1]} % más largos"
+    m = re.fullmatch(r"flota([+-])(\d+)", nombre)
+    if m:
+        return f"{m[2]} % {'más' if m[1] == '+' else 'menos'} vehículos disponibles de cada clase"
     m = re.fullmatch(r"furgon\+(\d+)", nombre)
     if m:
         return f"{m[1]} furgones fríos adicionales disponibles"
@@ -71,9 +78,15 @@ def aplicar(nombre: str | None, inst, cfg, semilla: int = 7) -> None:
     if not nombre or nombre == "base":
         return
     describir(nombre)                      # valida el nombre
+    m_tam = re.fullmatch(r"tam(\d+)_r(\d+)", nombre)
+    if m_tam:
+        from .generador import generar
+        generar(inst, cfg, int(m_tam[1]) / 100, semilla=1000 * int(m_tam[1]) + int(m_tam[2]))
+        return
     rng = random.Random(semilla)
     m_dem = re.fullmatch(r"demanda([+-])(\d+)", nombre)
     m_fur = re.fullmatch(r"furgon\+(\d+)", nombre)
+    m_flo = re.fullmatch(r"flota([+-])(\d+)", nombre)
     m_sin = re.fullmatch(r"sin_([a-z_]+)", nombre) if nombre not in ("sin_atraso", "sin_division") else None
     m_nueva = re.fullmatch(r"base_en_([a-z_]+)", nombre)
     m_ven = re.fullmatch(r"ventanas([+-])(\d+)", nombre)
@@ -91,15 +104,30 @@ def aplicar(nombre: str | None, inst, cfg, semilla: int = 7) -> None:
         f = int(m_dem[2]) / 100
         quitar = set(s.id for s in rng.sample(inst.solicitudes, round(f * len(inst.solicitudes))))
         inst.solicitudes = [s for s in inst.solicitudes if s.id not in quitar]
-    elif nombre == "flota-25":
+    elif m_flo and m_flo[1] == "-":
+        f = int(m_flo[2]) / 100
         por_clase = {}
         for k, v in sorted(inst.vehiculos.items()):
             por_clase.setdefault(v.clase, []).append(k)
         quedan = set()
         for clase, ks in por_clase.items():
-            quedan |= set(ks[: len(ks) - round(0.25 * len(ks))])
+            quedan |= set(ks[: len(ks) - round(f * len(ks))])
         inst.vehiculos = {k: v for k, v in inst.vehiculos.items() if k in quedan}
         inst.solicitudes = [replace(s, vehiculos=frozenset(s.vehiculos & quedan))
+                            for s in inst.solicitudes]
+    elif m_flo:
+        f = int(m_flo[2]) / 100
+        por_clase = {}
+        for k, v in sorted(inst.vehiculos.items()):
+            por_clase.setdefault(v.clase, []).append(k)
+        nuevos_de = {}
+        for clase, ks in por_clase.items():
+            nuevos = [f"{clase}_X{j + 1:02d}" for j in range(round(f * len(ks)))]
+            for k in nuevos:
+                inst.vehiculos[k] = replace(inst.vehiculos[ks[0]], id=k)
+            nuevos_de[clase] = (set(ks), set(nuevos))
+        inst.solicitudes = [replace(s, vehiculos=frozenset(s.vehiculos.union(
+                                *(nv for orig, nv in nuevos_de.values() if s.vehiculos & orig))))
                             for s in inst.solicitudes]
     elif m_fur:
         furgones = sorted(k for k, v in inst.vehiculos.items() if v.clase == "FURGON_FRIO")
